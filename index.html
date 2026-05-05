@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Roca · Imprenta & Librería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c: #00AEEF; --m: #EC008C; --y: #F5C800; --k: #1a1a1a;
+      --bg: #fff; --bg2: #f7f7f7; --bg3: #f0f0f0;
+      --border: #e8e8e8; --border2: #d0d0d0;
+      --text: #1a1a1a; --muted: #888; --subtle: #bbb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* CMYK BAR */
+    .cmyk-bar { display: flex; height: 4px; width: 100%; position: sticky; top: 0; z-index: 300; }
+    .cmyk-bar span { flex: 1; }
+
+    /* TOPBAR */
+    .topbar { background: var(--k); padding: 7px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .topbar a, .topbar span { color: #888; font-size: 11px; font-family: 'DM Mono', monospace; }
+    .topbar a:hover { color: white; }
+    .topbar-left { display: flex; gap: 24px; }
+    .topbar-right { display: flex; gap: 16px; }
+
+    /* NAVBAR */
+    .navbar { background: white; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 72px; border-bottom: 1px solid var(--border); position: sticky; top: 4px; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    .logo { cursor: pointer; display: flex; align-items: center; }
+    .logo img { height: 50px; object-fit: contain; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; position: relative; padding-bottom: 3px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; transition: width 0.2s; border-radius: 2px; background: var(--c); }
+    .nav-links a:hover { color: var(--k); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.al { color: var(--c); font-weight: 600; }
+    .nav-links a.al::after { width: 100%; background: var(--c); }
+    .nav-links a.am { color: var(--m); font-weight: 600; }
+    .nav-links a.am::after { width: 100%; background: var(--m); }
+    .nav-links a.ah { color: var(--k); font-weight: 600; }
+    .nav-links a.ah::after { width: 100%; background: var(--k); }
+    .cart-pill { background: var(--c); color: white; font-size: 12px; padding: 8px 18px; border-radius: 24px; font-weight: 600; border: none; transition: all 0.2s; font-family: 'DM Mono', monospace; }
+    .cart-pill:hover { background: #0098d4; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero { background: var(--k); min-height: 88vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 48px; text-align: center; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; opacity: 0.04; width: 580px; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: #555; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; border: 1px solid #2a2a2a; padding: 6px 18px; border-radius: 20px; display: inline-block; }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px,9vw,104px); color: white; line-height: 0.92; letter-spacing: 3px; margin-bottom: 24px; }
+    .hero h1 .hc { color: var(--c); }
+    .hero h1 .hm { color: var(--m); }
+    .hero-sub { font-size: 15px; color: #666; max-width: 460px; line-height: 1.7; margin-bottom: 56px; font-weight: 300; }
+    .hero-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 620px; width: 100%; }
+    .hcard { background: #161616; border: 1px solid #2a2a2a; border-radius: 18px; padding: 36px 28px; cursor: pointer; text-align: left; transition: all 0.3s; position: relative; overflow: hidden; }
+    .hcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; opacity: 0; transition: opacity 0.3s; }
+    .hcard.hlib::before { background: var(--c); }
+    .hcard.himp::before { background: var(--m); }
+    .hcard:hover { transform: translateY(-5px); }
+    .hcard.hlib:hover { border-color: #00AEEF44; box-shadow: 0 24px 60px #00AEEF12; }
+    .hcard.hlib:hover::before, .hcard.himp:hover::before { opacity: 1; }
+    .hcard.himp:hover { border-color: #EC008C44; box-shadow: 0 24px 60px #EC008C10; }
+    .hcard-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 18px; }
+    .hcard h2 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: white; letter-spacing: 1px; margin-bottom: 10px; }
+    .hcard p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 22px; }
+    .hcard-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 8px 18px; border-radius: 20px; font-weight: 600; font-family: 'DM Mono', monospace; border: none; cursor: pointer; transition: all 0.2s; }
+    .bc { background: var(--c); color: white; }
+    .bm { background: var(--m); color: white; }
+    .bc:hover { background: #0098d4; }
+    .bm:hover { background: #d00080; }
+
+    /* FEATURES */
+    .features { background: white; display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border); }
+    .feature { padding: 22px 24px; text-align: center; border-right: 1px solid var(--border); }
+    .feature:last-child { border-right: none; }
+    .feat-icon { font-size: 22px; margin-bottom: 8px; }
+    .feat-title { font-size: 13px; font-weight: 600; color: var(--k); margin-bottom: 3px; }
+    .feat-text { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+    /* SECTION */
+    .sec { padding: 56px 48px; }
+    .sec.grey { background: var(--bg2); }
+    .sec-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 10px; }
+    .sec-head h2 { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--k); letter-spacing: 1px; }
+    .sec-head p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .sec-link { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--muted); border-bottom: 1px solid var(--border2); padding-bottom: 2px; transition: all 0.2s; }
+    .sec-link:hover { color: var(--k); }
+    .accent { width: 40px; height: 3px; border-radius: 2px; margin: 10px 0 28px; }
+
+    /* PRODUCT CARD */
+    .pg4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .pg3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .pcard { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.2s; cursor: pointer; }
+    .pcard:hover { border-color: var(--c); box-shadow: 0 8px 32px rgba(0,174,239,0.1); transform: translateY(-2px); }
+    .pthumb { height: 110px; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 38px; position: relative; overflow: hidden; }
+    .pthumb img { width: 100%; height: 100%; object-fit: cover; }
+    .pbadge { position: absolute; top: 8px; left: 8px; font-size: 9px; padding: 3px 9px; border-radius: 10px; font-weight: 700; font-family: 'DM Mono', monospace; text-transform: uppercase; }
+    .bo { background: var(--m); color: white; }
+    .bn { background: var(--c); color: white; }
+    .pbody { padding: 14px 16px; }
+    .pcat { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+    .pname { font-size: 13px; font-weight: 500; color: var(--k); margin-bottom: 12px; line-height: 1.4; }
+    .pfoot { display: flex; align-items: center; justify-content: space-between; }
+    .pprice { font-size: 16px; color: var(--c); font-weight: 700; font-family: 'DM Mono', monospace; }
+    .abtn { background: var(--c); color: white; font-size: 11px; padding: 6px 12px; border-radius: 8px; font-weight: 600; border: none; transition: all 0.2s; }
+    .abtn:hover { background: #0098d4; }
+
+    /* SERVICE CARD HOME */
+    .sg4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .scrd { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.2s; cursor: pointer; }
+    .scrd:hover { border-color: var(--m); box-shadow: 0 8px 32px rgba(236,0,140,0.08); transform: translateY(-2px); }
+    .sthumb { height: 110px; overflow: hidden; background: var(--bg2); }
+    .sthumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .scrd:hover .sthumb img { transform: scale(1.06); }
+    .sbody { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .sname { font-size: 13px; font-weight: 600; color: var(--k); }
+    .wabtn-sm { display: inline-flex; align-items: center; gap: 4px; background: #25D366; color: white; font-size: 11px; padding: 5px 12px; border-radius: 16px; font-weight: 600; border: none; white-space: nowrap; }
+    .wabtn-sm:hover { opacity: 0.85; }
+
+    /* PAYMENT BANNER */
+    .pbanner { background: var(--k); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .pbanner-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: white; letter-spacing: 1px; }
+    .pbanner-text p { font-size: 13px; color: #666; margin-top: 5px; }
+    .ppills { display: flex; gap: 10px; }
+    .ppill { border: 1px solid #333; color: #888; font-size: 12px; padding: 7px 16px; border-radius: 20px; font-family: 'DM Mono', monospace; }
+    .ppill.hi { border-color: #F5C80055; color: var(--y); }
+
+    /* FOOTER */
+    footer { background: var(--k); color: white; padding: 52px 48px 24px; }
+    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+    .fbrand img { height: 44px; filter: brightness(10); opacity: 0.85; margin-bottom: 14px; display: block; }
+    .fbrand p { font-size: 13px; color: #555; line-height: 1.7; max-width: 240px; }
+    .fcol h4 { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 3px; font-family: 'DM Mono', monospace; margin-bottom: 16px; }
+    .fcol a, .fcol p { font-size: 13px; color: #444; display: block; margin-bottom: 8px; transition: color 0.2s; line-height: 1.5; }
+    .fcol a:hover { color: #aaa; }
+    .fbot { border-top: 1px solid #1e1e1e; padding-top: 20px; display: flex; align-items: center; justify-content: space-between; }
+    .fbot p { font-size: 11px; color: #333; font-family: 'DM Mono', monospace; }
+    .cdots { display: flex; gap: 5px; }
+    .cdot { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* ====== LIBRERÍA ====== */
+    .lib-hero { background: white; padding: 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .lib-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--k); letter-spacing: 2px; line-height: 1; margin-bottom: 10px; }
+    .lib-hero h1 span { color: var(--c); }
+    .lib-hero p { font-size: 15px; color: var(--muted); margin-bottom: 20px; font-weight: 300; }
+    .lbadges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lbadge { border: 1.5px solid var(--c); color: var(--c); font-size: 11px; padding: 5px 14px; border-radius: 20px; font-family: 'DM Mono', monospace; font-weight: 500; }
+    .lbadge.pl { border-color: var(--border2); color: var(--muted); }
+    .lib-hero-img { font-size: 120px; opacity: 0.12; }
+    .lib-filters { background: var(--bg2); padding: 14px 48px; display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    .fbtn { background: white; border: 1px solid var(--border2); color: var(--muted); font-size: 12px; padding: 6px 18px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: 'DM Mono', monospace; }
+    .fbtn.active, .fbtn:hover { background: var(--c); border-color: var(--c); color: white; font-weight: 600; }
+    .lib-main { display: grid; grid-template-columns: 210px 1fr; min-height: 600px; }
+    .lib-sidebar { padding: 28px 22px; border-right: 1px solid var(--border); background: white; }
+    .lib-sidebar h3 { font-size: 9px; font-weight: 700; color: var(--subtle); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; font-family: 'DM Mono', monospace; }
+    .ss { margin-bottom: 28px; }
+    .si { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; color: var(--muted); cursor: pointer; }
+    .si input { accent-color: var(--c); width: 14px; height: 14px; }
+    .si:hover { color: var(--k); }
+    .pinputs { display: flex; gap: 6px; margin-top: 10px; }
+    .pinputs input { width: 100%; font-size: 12px; padding: 7px 9px; border: 1px solid var(--border2); border-radius: 8px; background: var(--bg2); color: var(--k); font-family: 'DM Mono', monospace; }
+    .lib-products { padding: 28px 32px; background: var(--bg2); }
+    .lphead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+    .lphead span { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .lphead select { font-size: 12px; padding: 7px 12px; border: 1px solid var(--border2); border-radius: 8px; background: white; color: var(--k); }
+    .pgn { display: flex; gap: 6px; justify-content: center; margin-top: 32px; }
+    .pgbtn { width: 32px; height: 32px; border: 1px solid var(--border2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.2s; background: white; }
+    .pgbtn.active { background: var(--c); border-color: var(--c); color: white; font-weight: 700; }
+    .pgbtn:hover:not(.active) { border-color: var(--c); color: var(--c); }
+    .ship-strip { background: var(--k); padding: 13px 48px; }
+    .ship-strip span { font-size: 12px; color: #25D366; font-family: 'DM Mono', monospace; }
+
+    /* ====== IMPRENTA ====== */
+    .imp-hero { background: white; padding: 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .imp-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--k); letter-spacing: 2px; line-height: 1; margin-bottom: 10px; }
+    .imp-hero h1 span { color: var(--m); }
+    .imp-hero p { font-size: 15px; color: var(--muted); margin-bottom: 20px; font-weight: 300; }
+    .ibadge { border: 1.5px solid var(--m); color: var(--m); font-size: 12px; padding: 7px 16px; border-radius: 20px; display: inline-block; font-family: 'DM Mono', monospace; font-weight: 500; }
+    .imp-hero-img { font-size: 120px; opacity: 0.1; }
+    .how-strip { background: var(--bg2); border-bottom: 1px solid var(--border); display: grid; grid-template-columns: repeat(3,1fr); }
+    .hstep { padding: 22px 32px; display: flex; align-items: center; gap: 14px; border-right: 1px solid var(--border); }
+    .hstep:last-child { border-right: none; }
+    .hnum { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; color: white; font-family: 'DM Mono', monospace; }
+    .htxt h4 { font-size: 13px; font-weight: 600; color: var(--k); margin-bottom: 2px; }
+    .htxt p { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .isg { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .icard { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.2s; }
+    .icard:hover { border-color: var(--m); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(236,0,140,0.08); }
+    .icimg { height: 150px; overflow: hidden; background: var(--bg2); }
+    .icimg img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .icard:hover .icimg img { transform: scale(1.06); }
+    .icbody { padding: 16px 18px; }
+    .icname { font-size: 15px; font-weight: 600; color: var(--k); margin-bottom: 5px; }
+    .icdesc { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+    .itags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+    .itag { background: var(--bg2); border: 1px solid var(--border); color: var(--muted); font-size: 10px; padding: 3px 9px; border-radius: 10px; font-family: 'DM Mono', monospace; }
+    .wabtn { display: flex; align-items: center; justify-content: center; gap: 6px; background: #25D366; color: white; font-size: 13px; padding: 9px 14px; border-radius: 10px; font-weight: 600; border: none; width: 100%; transition: opacity 0.2s; }
+    .wabtn:hover { opacity: 0.85; }
+    .icta { background: var(--k); margin: 0 48px 40px; border-radius: 16px; padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .icta-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: white; letter-spacing: 1px; }
+    .icta-text p { font-size: 13px; color: #666; margin-top: 5px; }
+    .icta-btns { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+    .bwa { background: #25D366; color: white; font-size: 14px; padding: 12px 24px; border-radius: 10px; font-weight: 600; border: none; transition: opacity 0.2s; white-space: nowrap; }
+    .bwa:hover { opacity: 0.85; }
+    .bmail { border: 1px solid #333; color: #888; font-size: 12px; padding: 10px 24px; border-radius: 10px; background: none; font-family: 'DM Mono', monospace; transition: all 0.2s; white-space: nowrap; }
+    .bmail:hover { border-color: #666; color: #ccc; }
+    .iinfo { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; padding: 0 48px 48px; }
+    .iicard { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 22px; text-align: center; }
+    .iiicon { font-size: 26px; margin-bottom: 10px; }
+    .iititle { font-size: 14px; font-weight: 600; color: var(--k); margin-bottom: 6px; }
+    .iitext { font-size: 12px; color: var(--muted); line-height: 1.7; font-family: 'DM Mono', monospace; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    .page.active .hero-eyebrow { animation: fadeUp 0.4s ease both; }
+    .page.active .hero h1 { animation: fadeUp 0.5s ease 0.1s both; }
+    .page.active .hero-sub { animation: fadeUp 0.5s ease 0.2s both; }
+    .page.active .hero-cards { animation: fadeUp 0.55s ease 0.3s both; }
+
+    @media (max-width: 900px) {
+      .topbar { display: none; }
+      .navbar, .sec, .lib-filters, .lib-hero, .imp-hero, .ship-strip, .pbanner, footer, .icta, .iinfo { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 40px 20px; min-height: 80vh; }
+      .hero h1 { font-size: 52px; }
+      .hero-cards { grid-template-columns: 1fr; max-width: 360px; }
+      .features { grid-template-columns: repeat(2,1fr); }
+      .pg4, .sg4 { grid-template-columns: repeat(2,1fr); }
+      .lib-main { grid-template-columns: 1fr; }
+      .lib-sidebar { display: none; }
+      .pg3, .isg { grid-template-columns: repeat(2,1fr); }
+      .icta { flex-direction: column; gap: 20px; text-align: center; margin: 0 20px 28px; }
+      .icta-btns { align-items: center; }
+      .iinfo { grid-template-columns: 1fr; padding: 0 20px 32px; }
+      .fg { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .how-strip { grid-template-columns: 1fr; }
+      .hstep { border-right: none; border-bottom: 1px solid var(--border); }
+      .hstep:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cmyk-bar">
+  <span style="background:#00AEEF;"></span><span style="background:#EC008C;"></span>
+  <span style="background:#FFF200;"></span><span style="background:#1a1a1a;"></span>
+</div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="tel:01163794345">📞 (011) 6379-4345</a>
+    <a href="mailto:impresioneslaroca@hotmail.com">impresioneslaroca@hotmail.com</a>
+    <span>Lun–Vie 9–20hs · Sáb 10–17hs</span>
+  </div>
+  <div class="topbar-right">
+    <a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a>
+    <a href="https://twitter.com/ImprentaLaRoca" target="_blank">X</a>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="logo" onclick="showPage('home')">
+    <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca">
+  </div>
+  <div class="nav-links">
+    <a href="#" id="nh" class="ah" onclick="showPage('home');return false;">Inicio</a>
+    <a href="#" id="nl" onclick="showPage('libreria');return false;">Librería</a>
+    <a href="#" id="ni" onclick="showPage('imprenta');return false;">Imprenta</a>
+    <a href="#">Contacto</a>
+    <button class="cart-pill" onclick="showPage('libreria')">🛒 Carrito (0)</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <img class="hero-bg" src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="">
+    <div class="hero-eyebrow">Buenos Aires · 3 Sucursales · Desde 2009</div>
+    <h1><div>TODO LO QUE</div><div><span class="hc">IMPRIMÍS,</span></div><div>TODO LO QUE</div><div><span class="hm">ESCRIBÍS</span></div></h1>
+    <p class="hero-sub">Imprenta profesional y librería completa en Buenos Aires. Fotocopias, tarjetas, útiles escolares y mucho más.</p>
+    <div class="hero-cards">
+      <div class="hcard hlib" onclick="showPage('libreria')">
+        <div class="hcard-icon" style="background:#00AEEF18;">📚</div>
+        <h2>Librería</h2>
+        <p>Libros, útiles y artículos escolares. Envío a todo el país por Correo Argentino.</p>
+        <button class="hcard-btn bc">Ir a la tienda →</button>
+      </div>
+      <div class="hcard himp" onclick="showPage('imprenta')">
+        <div class="hcard-icon" style="background:#EC008C18;">🖨️</div>
+        <h2>Imprenta</h2>
+        <p>Fotocopias, tarjetas, plotter y laminados. Entrega en 24hs en CABA.</p>
+        <button class="hcard-btn bm">Ver servicios →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="features">
+    <div class="feature"><div class="feat-icon">🚚</div><div class="feat-title">Envío nacional</div><div class="feat-text">Correo Argentino</div></div>
+    <div class="feature"><div class="feat-icon">⏱️</div><div class="feat-title">Entrega en 24hs</div><div class="feat-text">Imprenta en CABA</div></div>
+    <div class="feature"><div class="feat-icon">💳</div><div class="feat-title">Múltiples pagos</div><div class="feat-text">MP · Transf · Efectivo</div></div>
+    <div class="feature"><div class="feat-icon">💬</div><div class="feat-title">WhatsApp directo</div><div class="feat-text">Respuesta inmediata</div></div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-head">
+      <div><h2>Librería — Destacados</h2><p>Los más vendidos de esta semana</p></div>
+      <a href="#" class="sec-link" onclick="showPage('libreria');return false;">Ver todo →</a>
+    </div>
+    <div class="accent" style="background:var(--c);"></div>
+    <div class="pg4">
+      <div class="pcard"><div class="pthumb">📒<div class="pbadge bo">OFERTA</div></div><div class="pbody"><div class="pcat">Carpetas</div><div class="pname">Carpeta N°3 con elástico</div><div class="pfoot"><div class="pprice">$2.500</div><button class="abtn">+ Carrito</button></div></div></div>
+      <div class="pcard"><div class="pthumb">✏️</div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Set lápices x12 colores</div><div class="pfoot"><div class="pprice">$1.800</div><button class="abtn">+ Carrito</button></div></div></div>
+      <div class="pcard"><div class="pthumb">📐<div class="pbadge bn">NUEVO</div></div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Regla 30cm transparente</div><div class="pfoot"><div class="pprice">$950</div><button class="abtn">+ Carrito</button></div></div></div>
+      <div class="pcard"><div class="pthumb">🎨</div><div class="pbody"><div class="pcat">Arte</div><div class="pname">Témperas escolares x6</div><div class="pfoot"><div class="pprice">$2.100</div><button class="abtn">+ Carrito</button></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec grey">
+    <div class="sec-head">
+      <div><h2>Imprenta — Servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto</p></div>
+      <a href="#" class="sec-link" onclick="showPage('imprenta');return false;">Ver todo →</a>
+    </div>
+    <div class="accent" style="background:var(--m);"></div>
+    <div class="sg4">
+      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="sbody"><div class="sname">Fotocopias</div><button class="wabtn-sm">💬 Consultar</button></div></div>
+      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="sbody"><div class="sname">Tarjetas</div><button class="wabtn-sm">💬 Consultar</button></div></div>
+      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="sbody"><div class="sname">Plotter</div><button class="wabtn-sm">💬 Consultar</button></div></div>
+      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="sbody"><div class="sname">Laminados</div><button class="wabtn-sm">💬 Consultar</button></div></div>
+    </div>
+  </section>
+
+  <div class="pbanner">
+    <div class="pbanner-text"><h3>Medios de pago disponibles</h3><p>Comprá como más te convenga — online o en local</p></div>
+    <div class="ppills">
+      <div class="ppill hi">Mercado Pago</div>
+      <div class="ppill">Transferencia</div>
+      <div class="ppill">Efectivo</div>
+      <div class="ppill">Cuotas</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="fg">
+      <div class="fbrand"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca"><p>Imprenta y librería con más de 15 años en Buenos Aires. Calidad, rapidez y atención personalizada.</p></div>
+      <div class="fcol"><h4>Sucursales</h4><p>Terrero 16 · CABA</p><p>Rivera Indarte 70 · CABA</p><p>Av. Rivadavia 6385 · CABA</p></div>
+      <div class="fcol"><h4>WhatsApp</h4><a href="https://wa.me/5491166067511">11-6606-7511</a><a href="https://wa.me/5491130431614">11-3043-1614</a><a href="https://wa.me/5491134143010">11-3414-3010</a></div>
+      <div class="fcol"><h4>Seguinos</h4><a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a><a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a><a href="https://twitter.com/ImprentaLaRoca" target="_blank">X (Twitter)</a></div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires</p>
+      <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
+    </div>
+  </footer>
+</div>
+
+<!-- LIBRERÍA -->
+<div class="page" id="page-libreria">
+  <div class="lib-hero">
+    <div>
+      <h1>Librería <span>La Roca</span></h1>
+      <p>Útiles, libros y artículos escolares · Envío a todo el país</p>
+      <div class="lbadges">
+        <div class="lbadge">📦 Correo Argentino</div>
+        <div class="lbadge pl">🏪 Retiro en local</div>
+        <div class="lbadge pl">💳 Cuotas con MP</div>
+      </div>
+    </div>
+    <div class="lib-hero-img">📚</div>
+  </div>
+  <div class="lib-filters">
+    <div class="fbtn active">Todos</div><div class="fbtn">Útiles</div><div class="fbtn">Libros</div>
+    <div class="fbtn">Arte</div><div class="fbtn">Carpetas</div><div class="fbtn">Papelería</div><div class="fbtn">Ofertas</div>
+  </div>
+  <div class="lib-main">
+    <div class="lib-sidebar">
+      <div class="ss"><h3>Categorías</h3>
+        <div class="si"><input type="checkbox" checked> Útiles escolares</div>
+        <div class="si"><input type="checkbox"> Libros</div>
+        <div class="si"><input type="checkbox"> Arte y dibujo</div>
+        <div class="si"><input type="checkbox"> Carpetas</div>
+        <div class="si"><input type="checkbox"> Papelería</div>
+      </div>
+      <div class="ss"><h3>Precio</h3>
+        <div class="pinputs"><input type="text" value="$0"><input type="text" value="$5000"></div>
+      </div>
+      <div class="ss"><h3>Envío</h3>
+        <div class="si"><input type="checkbox" checked> Correo Argentino</div>
+        <div class="si"><input type="checkbox" checked> Retiro en local</div>
+      </div>
+    </div>
+    <div class="lib-products">
+      <div class="lphead">
+        <span>Mostrando 9 de 180 productos</span>
+        <select><option>Más vendidos</option><option>Menor precio</option><option>Mayor precio</option><option>Novedades</option></select>
+      </div>
+      <div class="pg3">
+        <div class="pcard"><div class="pthumb">📒<div class="pbadge bo">OFERTA</div></div><div class="pbody"><div class="pcat">Carpetas</div><div class="pname">Carpeta N°3 con elástico</div><div class="pfoot"><div class="pprice">$2.500</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">✏️</div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Set lápices x12 colores</div><div class="pfoot"><div class="pprice">$1.800</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">📐<div class="pbadge bn">NUEVO</div></div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Regla 30cm transparente</div><div class="pfoot"><div class="pprice">$950</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">📔</div><div class="pbody"><div class="pcat">Libros</div><div class="pname">Cuaderno tapa dura A4</div><div class="pfoot"><div class="pprice">$3.200</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">🖊️</div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Lapicera azul x10 unidades</div><div class="pfoot"><div class="pprice">$1.200</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">🎨</div><div class="pbody"><div class="pcat">Arte</div><div class="pname">Témperas escolares x6</div><div class="pfoot"><div class="pprice">$2.100</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">📏<div class="pbadge bo">OFERTA</div></div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Escuadra + cartabón set</div><div class="pfoot"><div class="pprice">$1.400</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">🖌️</div><div class="pbody"><div class="pcat">Arte</div><div class="pname">Pinceles escolares x5</div><div class="pfoot"><div class="pprice">$1.600</div><button class="abtn">+ Carrito</button></div></div></div>
+        <div class="pcard"><div class="pthumb">📝</div><div class="pbody"><div class="pcat">Papelería</div><div class="pname">Block de hojas A4 x100</div><div class="pfoot"><div class="pprice">$2.800</div><button class="abtn">+ Carrito</button></div></div></div>
+      </div>
+      <div class="pgn">
+        <div class="pgbtn active">1</div><div class="pgbtn">2</div><div class="pgbtn">3</div><div class="pgbtn">4</div><div class="pgbtn">→</div>
+      </div>
+    </div>
+  </div>
+  <div class="ship-strip"><span>🚚 Envíos a todo el país por Correo Argentino · Calculá el costo al finalizar tu compra</span></div>
+  <footer>
+    <div class="fbot">
+      <p>© 2026 La Roca · Librería e Imprenta · Buenos Aires</p>
+      <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
+    </div>
+  </footer>
+</div>
+
+<!-- IMPRENTA -->
+<div class="page" id="page-imprenta">
+  <div class="imp-hero">
+    <div>
+      <h1>Imprenta <span>La Roca</span></h1>
+      <p>Fotocopias, tarjetas, plotter, laminados y mucho más. Entrega en 24hs en CABA.</p>
+      <div class="ibadge">💬 Todos los pedidos se gestionan por WhatsApp</div>
+    </div>
+    <div class="imp-hero-img">🖨️</div>
+  </div>
+  <div class="how-strip">
+    <div class="hstep"><div class="hnum" style="background:var(--c);">1</div><div class="htxt"><h4>Elegí el servicio</h4><p>Buscá lo que necesitás</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--m);">2</div><div class="htxt"><h4>Consultá por WhatsApp</h4><p>Presupuesto al instante</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Confirmás y listo</h4><p>Retirás en 24 horas</p></div></div>
+  </div>
+  <section class="sec">
+    <div class="sec-head"><div><h2>Nuestros servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto al instante</p></div></div>
+    <div class="accent" style="background:var(--m);"></div>
+    <div class="isg">
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="icbody"><div class="icname">Fotocopias</div><div class="icdesc">B&N y color, simples y doble faz, cualquier tamaño</div><div class="itags"><div class="itag">A4</div><div class="itag">A3</div><div class="itag">Color</div><div class="itag">Doble faz</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="icbody"><div class="icname">Tarjetas</div><div class="icdesc">Personales y comerciales, con o sin plastificado</div><div class="itags"><div class="itag">Full color</div><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="icbody"><div class="icname">Plotter</div><div class="icdesc">Impresión de gran formato para carteles y banners</div><div class="itags"><div class="itag">Vinil</div><div class="itag">Lona</div><div class="itag">Gran formato</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="icbody"><div class="icname">Laminados</div><div class="icdesc">Protección mate o brillante para tus impresiones</div><div class="itags"><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/carpetas_s.jpg" alt="Carpetas"></div><div class="icbody"><div class="icname">Carpetas</div><div class="icdesc">Corporativas, troqueladas y personalizadas</div><div class="itags"><div class="itag">Troquelada</div><div class="itag">Personalizada</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/talonarios_s.jpg" alt="Talonarios"></div><div class="icbody"><div class="icname">Talonarios</div><div class="icdesc">Remitos, recibos y formularios personalizados</div><div class="itags"><div class="itag">50 hojas</div><div class="itag">100 hojas</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laser2_s.jpg" alt="Bajadas Laser"></div><div class="icbody"><div class="icname">Bajadas Láser</div><div class="icdesc">Impresión láser de alta calidad y precisión</div><div class="itags"><div class="itag">Alta calidad</div><div class="itag">Rápido</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/sellos_s.jpg" alt="Sellos"></div><div class="icbody"><div class="icname">Sellos</div><div class="icdesc">Sellos personalizados para empresas y profesionales</div><div class="itags"><div class="itag">Automático</div><div class="itag">Personalizado</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/volantes_s.jpg" alt="Volantes"></div><div class="icbody"><div class="icname">Volantes</div><div class="icdesc">Volantes full color para publicidad y eventos</div><div class="itags"><div class="itag">A5</div><div class="itag">A6</div><div class="itag">Full color</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+    </div>
+  </section>
+  <div class="icta">
+    <div class="icta-text"><h3>¿No encontrás lo que buscás?</h3><p>Consultanos por cualquier tipo de impresión o servicio gráfico</p></div>
+    <div class="icta-btns">
+      <button class="bwa" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Escribinos por WhatsApp</button>
+      <button class="bmail" onclick="window.location='mailto:impresioneslaroca@hotmail.com'">✉️ impresioneslaroca@hotmail.com</button>
+    </div>
+  </div>
+  <div class="iinfo">
+    <div class="iicard"><div class="iiicon">📍</div><div class="iititle">3 Sucursales CABA</div><div class="iitext">Terrero 16<br>Rivera Indarte 70<br>Av. Rivadavia 6385</div></div>
+    <div class="iicard"><div class="iiicon">⏱️</div><div class="iititle">Entrega en 24hs</div><div class="iitext">Lun–Vie 9–20hs<br>Sáb 10–17hs<br>Rivadavia Sáb hasta 20hs</div></div>
+    <div class="iicard"><div class="iiicon">💳</div><div class="iititle">Formas de pago</div><div class="iitext">Efectivo<br>Transferencia bancaria<br>Mercado Pago</div></div>
+  </div>
+  <footer>
+    <div class="fbot">
+      <p>© 2026 La Roca · Librería e Imprenta · Buenos Aires</p>
+      <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+    ['nh','nl','ni'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.className = '';
+    });
+    if (name === 'home') document.getElementById('nh').className = 'ah';
+    if (name === 'libreria') document.getElementById('nl').className = 'al';
+    if (name === 'imprenta') document.getElementById('ni').className = 'am';
+  }
+  document.querySelectorAll('.fbtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.closest('.lib-filters').querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
