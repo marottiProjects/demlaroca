@@ -52,7 +52,9 @@
 
     /* HERO */
     .hero { background: var(--k); min-height: 88vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 48px; text-align: center; position: relative; overflow: hidden; }
-    .hero-bg { position: absolute; opacity: 0.04; width: 580px; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+    .hero-wm { position: absolute; opacity: 0.05; width: 520px; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; text-align: center; }
+    .hero-wm img { width: 100%; display: block; }
+    .hero-wm-txt { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: white; letter-spacing: 6px; margin-top: 6px; }
     .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: #555; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; border: 1px solid #2a2a2a; padding: 6px 18px; border-radius: 20px; display: inline-block; }
     .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px,9vw,104px); color: white; line-height: 0.92; letter-spacing: 3px; margin-bottom: 24px; }
     .hero h1 .hc { color: var(--c); }
@@ -77,7 +79,7 @@
     .bm:hover { background: #d00080; }
 
     /* FEATURES */
-    .features { background: white; display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border); }
+    .features { background: white; display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--border); }
     .feature { padding: 22px 24px; text-align: center; border-right: 1px solid var(--border); }
     .feature:last-child { border-right: none; }
     .feat-icon { font-size: 22px; margin-bottom: 8px; }
@@ -128,14 +130,25 @@
     .pbanner { background: var(--k); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; }
     .pbanner-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: white; letter-spacing: 1px; }
     .pbanner-text p { font-size: 13px; color: #666; margin-top: 5px; }
-    .ppills { display: flex; gap: 10px; }
+    .ppills { display: flex; gap: 10px; flex-wrap: wrap; }
     .ppill { border: 1px solid #333; color: #888; font-size: 12px; padding: 7px 16px; border-radius: 20px; font-family: 'DM Mono', monospace; }
     .ppill.hi { border-color: #F5C80055; color: var(--y); }
+    .ppill.hg { border-color: #00AEEF55; color: var(--c); }
+
+    /* HORARIOS STRIP */
+    .horarios-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 36px 48px; }
+    .horarios-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--k); letter-spacing: 1px; margin-bottom: 20px; }
+    .horarios-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .hcrd { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; }
+    .hcrd-name { font-size: 13px; font-weight: 700; color: var(--k); margin-bottom: 4px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+    .hcrd-days { font-size: 13px; color: var(--muted); line-height: 1.8; }
+    .hcrd-days span { color: var(--c); font-weight: 600; }
 
     /* FOOTER */
     footer { background: var(--k); color: white; padding: 52px 48px 24px; }
-    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
-    .fbrand img { height: 44px; filter: brightness(10); opacity: 0.85; margin-bottom: 14px; display: block; }
+    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .fbrand img { height: 44px; object-fit: contain; margin-bottom: 6px; display: block; }
+    .fbrand-sub { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
     .fbrand p { font-size: 13px; color: #555; line-height: 1.7; max-width: 240px; }
     .fcol h4 { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 3px; font-family: 'DM Mono', monospace; margin-bottom: 16px; }
     .fcol a, .fcol p { font-size: 13px; color: #444; display: block; margin-bottom: 8px; transition: color 0.2s; line-height: 1.5; }
@@ -146,6 +159,18 @@
     .cdot { width: 7px; height: 7px; border-radius: 50%; }
 
     /* ====== LIBRERÍA ====== */
+    /* Dynamic Banner */
+    .dyn-banner { position: relative; overflow: hidden; height: 110px; }
+    .dbn-slides { display: flex; transition: transform 0.7s ease; height: 100%; }
+    .dbn-slide { min-width: 100%; display: flex; align-items: center; justify-content: center; padding: 0 48px; }
+    .dbn-slide h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: white; letter-spacing: 2px; text-align: center; }
+    .dbn-slide h3 .sc { color: var(--c); }
+    .dbn-slide h3 .sm { color: var(--m); }
+    .dbn-slide h3 .sy { color: var(--y); }
+    .dbn-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; }
+    .dbn-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.25); cursor: pointer; transition: background 0.2s; }
+    .dbn-dot.active { background: white; }
+
     .lib-hero { background: white; padding: 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
     .lib-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--k); letter-spacing: 2px; line-height: 1; margin-bottom: 10px; }
     .lib-hero h1 span { color: var(--c); }
@@ -154,7 +179,13 @@
     .lbadge { border: 1.5px solid var(--c); color: var(--c); font-size: 11px; padding: 5px 14px; border-radius: 20px; font-family: 'DM Mono', monospace; font-weight: 500; }
     .lbadge.pl { border-color: var(--border2); color: var(--muted); }
     .lib-hero-img { font-size: 120px; opacity: 0.12; }
-    .lib-filters { background: var(--bg2); padding: 14px 48px; display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    /* Search bar */
+    .lib-search { background: var(--bg2); padding: 12px 48px; border-bottom: 1px solid var(--border); }
+    .lib-search-inner { display: flex; align-items: center; gap: 10px; max-width: 500px; background: white; border: 1.5px solid var(--border2); border-radius: 28px; padding: 8px 18px; transition: border-color 0.2s; }
+    .lib-search-inner:focus-within { border-color: var(--c); }
+    .lib-search-inner span { font-size: 16px; }
+    .lib-search-inner input { flex: 1; border: none; outline: none; font-size: 13px; color: var(--k); font-family: 'DM Sans', sans-serif; background: transparent; }
+    .lib-filters { background: var(--bg2); padding: 10px 48px 14px; display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
     .fbtn { background: white; border: 1px solid var(--border2); color: var(--muted); font-size: 12px; padding: 6px 18px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: 'DM Mono', monospace; }
     .fbtn.active, .fbtn:hover { background: var(--c); border-color: var(--c); color: white; font-weight: 600; }
     .lib-main { display: grid; grid-template-columns: 210px 1fr; min-height: 600px; }
@@ -219,6 +250,8 @@
 
     /* ANIMATIONS */
     @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pageIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .page.active { display: block; animation: pageIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
     .page.active .hero-eyebrow { animation: fadeUp 0.4s ease both; }
     .page.active .hero h1 { animation: fadeUp 0.5s ease 0.1s both; }
     .page.active .hero-sub { animation: fadeUp 0.5s ease 0.2s both; }
@@ -226,7 +259,7 @@
 
     @media (max-width: 900px) {
       .topbar { display: none; }
-      .navbar, .sec, .lib-filters, .lib-hero, .imp-hero, .ship-strip, .pbanner, footer, .icta, .iinfo { padding-left: 20px; padding-right: 20px; }
+      .navbar, .sec, .lib-filters, .lib-search, .lib-hero, .imp-hero, .ship-strip, .pbanner, footer, .icta, .iinfo, .horarios-section { padding-left: 20px; padding-right: 20px; }
       .hero { padding: 40px 20px; min-height: 80vh; }
       .hero h1 { font-size: 52px; }
       .hero-cards { grid-template-columns: 1fr; max-width: 360px; }
@@ -242,6 +275,9 @@
       .how-strip { grid-template-columns: 1fr; }
       .hstep { border-right: none; border-bottom: 1px solid var(--border); }
       .hstep:last-child { border-bottom: none; }
+      .horarios-grid { grid-template-columns: 1fr; }
+      .dbn-slide { padding: 0 20px; }
+      .dbn-slide h3 { font-size: 20px; }
     }
   </style>
 </head>
@@ -254,9 +290,9 @@
 
 <div class="topbar">
   <div class="topbar-left">
-    <a href="tel:01163794345">📞 (011) 6379-4345</a>
-    <a href="mailto:impresioneslaroca@hotmail.com">impresioneslaroca@hotmail.com</a>
-    <span>Lun–Vie 9–20hs · Sáb 10–17hs</span>
+    <a href="https://wa.me/5491130431614" target="_blank">💬 WhatsApp 11-3043-1614</a>
+    <a href="mailto:impresioneslaroca2@hotmail.com">impresioneslaroca2@hotmail.com</a>
+    <span>Lun–Vie 9–20hs · Sáb 10–17hs · Rivadavia Sáb hasta 20hs</span>
   </div>
   <div class="topbar-right">
     <a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a>
@@ -281,10 +317,13 @@
 <!-- HOME -->
 <div class="page active" id="page-home">
   <section class="hero">
-    <img class="hero-bg" src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="">
-    <div class="hero-eyebrow">Buenos Aires · 3 Sucursales · Desde 2009</div>
+    <div class="hero-wm">
+      <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="">
+      <div class="hero-wm-txt">Imprenta y Librería</div>
+    </div>
+    <div class="hero-eyebrow">Buenos Aires · 3 Sucursales · Desde 2004</div>
     <h1><div>TODO LO QUE</div><div><span class="hc">IMPRIMÍS,</span></div><div>TODO LO QUE</div><div><span class="hm">ESCRIBÍS</span></div></h1>
-    <p class="hero-sub">Imprenta profesional y librería completa en Buenos Aires. Fotocopias, tarjetas, útiles escolares y mucho más.</p>
+    <p class="hero-sub">Imprenta profesional y librería completa en Buenos Aires. Fotocopias, tarjetas, útiles escolares y mucho más. <strong style="color:#aaa;">+20 años de experiencia.</strong></p>
     <div class="hero-cards">
       <div class="hcard hlib" onclick="showPage('libreria')">
         <div class="hcard-icon" style="background:#00AEEF18;">📚</div>
@@ -295,7 +334,7 @@
       <div class="hcard himp" onclick="showPage('imprenta')">
         <div class="hcard-icon" style="background:#EC008C18;">🖨️</div>
         <h2>Imprenta</h2>
-        <p>Fotocopias, tarjetas, plotter y laminados. Entrega en 24hs en CABA.</p>
+        <p>Fotocopias, tarjetas, plotter y laminados. Entregas en el día en CABA.</p>
         <button class="hcard-btn bm">Ver servicios →</button>
       </div>
     </div>
@@ -303,9 +342,10 @@
 
   <div class="features">
     <div class="feature"><div class="feat-icon">🚚</div><div class="feat-title">Envío nacional</div><div class="feat-text">Correo Argentino</div></div>
-    <div class="feature"><div class="feat-icon">⏱️</div><div class="feat-title">Entrega en 24hs</div><div class="feat-text">Imprenta en CABA</div></div>
-    <div class="feature"><div class="feat-icon">💳</div><div class="feat-title">Múltiples pagos</div><div class="feat-text">MP · Transf · Efectivo</div></div>
+    <div class="feature"><div class="feat-icon">⚡</div><div class="feat-title">Entregas en el día</div><div class="feat-text">Imprenta en CABA</div></div>
+    <div class="feature"><div class="feat-icon">💳</div><div class="feat-title">Múltiples pagos</div><div class="feat-text">MP · Tarjetas · Transf · Efectivo</div></div>
     <div class="feature"><div class="feat-icon">💬</div><div class="feat-title">WhatsApp directo</div><div class="feat-text">Respuesta inmediata</div></div>
+    <div class="feature"><div class="feat-icon">⭐</div><div class="feat-title">+20 años de experiencia</div><div class="feat-text">En Buenos Aires desde 2004</div></div>
   </div>
 
   <section class="sec">
@@ -340,21 +380,47 @@
     <div class="pbanner-text"><h3>Medios de pago disponibles</h3><p>Comprá como más te convenga — online o en local</p></div>
     <div class="ppills">
       <div class="ppill hi">Mercado Pago</div>
+      <div class="ppill hg">Tarjetas de crédito</div>
+      <div class="ppill hg">Tarjetas de débito</div>
       <div class="ppill">Transferencia</div>
       <div class="ppill">Efectivo</div>
       <div class="ppill">Cuotas</div>
     </div>
   </div>
 
+  <!-- HORARIOS -->
+  <div class="horarios-section">
+    <h3>Horarios de atención</h3>
+    <div class="horarios-grid">
+      <div class="hcrd">
+        <div class="hcrd-name">📍 Terrero 16 · CABA</div>
+        <div class="hcrd-days">Lun–Vie: <span>9:00 – 20:00 hs</span><br>Sábado: <span>10:00 – 17:00 hs</span></div>
+      </div>
+      <div class="hcrd">
+        <div class="hcrd-name">📍 Rivera Indarte 70 · CABA</div>
+        <div class="hcrd-days">Lun–Vie: <span>9:00 – 20:00 hs</span><br>Sábado: <span>10:00 – 17:00 hs</span></div>
+      </div>
+      <div class="hcrd">
+        <div class="hcrd-name">📍 Av. Rivadavia 6385 · CABA</div>
+        <div class="hcrd-days">Lun–Vie: <span>9:00 – 20:00 hs</span><br>Sábado: <span>10:00 – 20:00 hs</span> ★</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="fg">
-      <div class="fbrand"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca"><p>Imprenta y librería con más de 15 años en Buenos Aires. Calidad, rapidez y atención personalizada.</p></div>
+      <div class="fbrand">
+        <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca">
+        <div class="fbrand-sub">Imprenta y Librería</div>
+        <p>Con más de 20 años en Buenos Aires. Calidad, rapidez y atención personalizada. Desde 2004.</p>
+      </div>
       <div class="fcol"><h4>Sucursales</h4><p>Terrero 16 · CABA</p><p>Rivera Indarte 70 · CABA</p><p>Av. Rivadavia 6385 · CABA</p></div>
-      <div class="fcol"><h4>WhatsApp</h4><a href="https://wa.me/5491166067511">11-6606-7511</a><a href="https://wa.me/5491130431614">11-3043-1614</a><a href="https://wa.me/5491134143010">11-3414-3010</a></div>
+      <div class="fcol"><h4>WhatsApp</h4><a href="https://wa.me/5491130431614">11-6606-7511</a><a href="https://wa.me/5491130431614">11-3043-1614</a><a href="https://wa.me/5491134143010">11-3414-3010</a></div>
+      <div class="fcol"><h4>Horarios</h4><p>Lun–Vie: 9–20hs</p><p>Sáb: 10–17hs</p><p style="color:#00AEEF;">Rivadavia Sáb: 10–20hs</p></div>
       <div class="fcol"><h4>Seguinos</h4><a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a><a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a><a href="https://twitter.com/ImprentaLaRoca" target="_blank">X (Twitter)</a></div>
     </div>
     <div class="fbot">
-      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires</p>
+      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires · Desde 2004</p>
       <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
     </div>
   </footer>
@@ -362,6 +428,30 @@
 
 <!-- LIBRERÍA -->
 <div class="page" id="page-libreria">
+  <!-- Banner dinámico -->
+  <div class="dyn-banner">
+    <div class="dbn-slides" id="dbnSlides">
+      <div class="dbn-slide" style="background:linear-gradient(135deg,#0a1a2e,#0d2540);">
+        <h3>📦 ENVÍOS A TODO EL PAÍS · <span class="sc">CORREO ARGENTINO</span></h3>
+      </div>
+      <div class="dbn-slide" style="background:linear-gradient(135deg,#1e0a18,#2a0d22);">
+        <h3>💳 MÚLTIPLES MEDIOS DE PAGO · <span class="sm">TARJETAS, MP Y MÁS</span></h3>
+      </div>
+      <div class="dbn-slide" style="background:linear-gradient(135deg,#1a1600,#252200);">
+        <h3>⭐ <span class="sy">+20 AÑOS</span> DE EXPERIENCIA EN BUENOS AIRES</h3>
+      </div>
+      <div class="dbn-slide" style="background:linear-gradient(135deg,#0d1a0d,#122012);">
+        <h3>🏪 3 SUCURSALES · <span class="sc">LUNES A SÁBADO</span></h3>
+      </div>
+    </div>
+    <div class="dbn-dots" id="dbnDots">
+      <div class="dbn-dot active" onclick="dbnGo(0)"></div>
+      <div class="dbn-dot" onclick="dbnGo(1)"></div>
+      <div class="dbn-dot" onclick="dbnGo(2)"></div>
+      <div class="dbn-dot" onclick="dbnGo(3)"></div>
+    </div>
+  </div>
+
   <div class="lib-hero">
     <div>
       <h1>Librería <span>La Roca</span></h1>
@@ -374,9 +464,19 @@
     </div>
     <div class="lib-hero-img">📚</div>
   </div>
+
+  <!-- Buscador -->
+  <div class="lib-search">
+    <div class="lib-search-inner">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar productos, marcas, categorías...">
+    </div>
+  </div>
+
   <div class="lib-filters">
     <div class="fbtn active">Todos</div><div class="fbtn">Útiles</div><div class="fbtn">Libros</div>
     <div class="fbtn">Arte</div><div class="fbtn">Carpetas</div><div class="fbtn">Papelería</div><div class="fbtn">Ofertas</div>
+    <div class="fbtn">Marcas</div>
   </div>
   <div class="lib-main">
     <div class="lib-sidebar">
@@ -386,6 +486,16 @@
         <div class="si"><input type="checkbox"> Arte y dibujo</div>
         <div class="si"><input type="checkbox"> Carpetas</div>
         <div class="si"><input type="checkbox"> Papelería</div>
+      </div>
+      <div class="ss"><h3>Marcas</h3>
+        <div class="si"><input type="checkbox"> Bic</div>
+        <div class="si"><input type="checkbox"> Maped</div>
+        <div class="si"><input type="checkbox"> Staedtler</div>
+        <div class="si"><input type="checkbox"> Faber-Castell</div>
+        <div class="si"><input type="checkbox"> Artline</div>
+        <div class="si"><input type="checkbox"> Ledesma</div>
+        <div class="si"><input type="checkbox"> Trabi</div>
+        <div class="si"><input type="checkbox"> Bismark</div>
       </div>
       <div class="ss"><h3>Precio</h3>
         <div class="pinputs"><input type="text" value="$0"><input type="text" value="$5000"></div>
@@ -419,7 +529,7 @@
   <div class="ship-strip"><span>🚚 Envíos a todo el país por Correo Argentino · Calculá el costo al finalizar tu compra</span></div>
   <footer>
     <div class="fbot">
-      <p>© 2026 La Roca · Librería e Imprenta · Buenos Aires</p>
+      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires · Desde 2004</p>
       <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
     </div>
   </footer>
@@ -430,7 +540,7 @@
   <div class="imp-hero">
     <div>
       <h1>Imprenta <span>La Roca</span></h1>
-      <p>Fotocopias, tarjetas, plotter, laminados y mucho más. Entrega en 24hs en CABA.</p>
+      <p>Fotocopias, tarjetas, plotter, laminados y mucho más. Entregas en el día en CABA.</p>
       <div class="ibadge">💬 Todos los pedidos se gestionan por WhatsApp</div>
     </div>
     <div class="imp-hero-img">🖨️</div>
@@ -438,38 +548,38 @@
   <div class="how-strip">
     <div class="hstep"><div class="hnum" style="background:var(--c);">1</div><div class="htxt"><h4>Elegí el servicio</h4><p>Buscá lo que necesitás</p></div></div>
     <div class="hstep"><div class="hnum" style="background:var(--m);">2</div><div class="htxt"><h4>Consultá por WhatsApp</h4><p>Presupuesto al instante</p></div></div>
-    <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Confirmás y listo</h4><p>Retirás en 24 horas</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Confirmás y listo</h4><p>Retirás el mismo día</p></div></div>
   </div>
   <section class="sec">
     <div class="sec-head"><div><h2>Nuestros servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto al instante</p></div></div>
     <div class="accent" style="background:var(--m);"></div>
     <div class="isg">
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="icbody"><div class="icname">Fotocopias</div><div class="icdesc">B&N y color, simples y doble faz, cualquier tamaño</div><div class="itags"><div class="itag">A4</div><div class="itag">A3</div><div class="itag">Color</div><div class="itag">Doble faz</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="icbody"><div class="icname">Tarjetas</div><div class="icdesc">Personales y comerciales, con o sin plastificado</div><div class="itags"><div class="itag">Full color</div><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="icbody"><div class="icname">Plotter</div><div class="icdesc">Impresión de gran formato para carteles y banners</div><div class="itags"><div class="itag">Vinil</div><div class="itag">Lona</div><div class="itag">Gran formato</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="icbody"><div class="icname">Laminados</div><div class="icdesc">Protección mate o brillante para tus impresiones</div><div class="itags"><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/carpetas_s.jpg" alt="Carpetas"></div><div class="icbody"><div class="icname">Carpetas</div><div class="icdesc">Corporativas, troqueladas y personalizadas</div><div class="itags"><div class="itag">Troquelada</div><div class="itag">Personalizada</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/talonarios_s.jpg" alt="Talonarios"></div><div class="icbody"><div class="icname">Talonarios</div><div class="icdesc">Remitos, recibos y formularios personalizados</div><div class="itags"><div class="itag">50 hojas</div><div class="itag">100 hojas</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laser2_s.jpg" alt="Bajadas Laser"></div><div class="icbody"><div class="icname">Bajadas Láser</div><div class="icdesc">Impresión láser de alta calidad y precisión</div><div class="itags"><div class="itag">Alta calidad</div><div class="itag">Rápido</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/sellos_s.jpg" alt="Sellos"></div><div class="icbody"><div class="icname">Sellos</div><div class="icdesc">Sellos personalizados para empresas y profesionales</div><div class="itags"><div class="itag">Automático</div><div class="itag">Personalizado</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/volantes_s.jpg" alt="Volantes"></div><div class="icbody"><div class="icname">Volantes</div><div class="icdesc">Volantes full color para publicidad y eventos</div><div class="itags"><div class="itag">A5</div><div class="itag">A6</div><div class="itag">Full color</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="icbody"><div class="icname">Fotocopias</div><div class="icdesc">B&N y color, simples y doble faz, cualquier tamaño</div><div class="itags"><div class="itag">A4</div><div class="itag">A3</div><div class="itag">Color</div><div class="itag">Doble faz</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="icbody"><div class="icname">Tarjetas</div><div class="icdesc">Personales y comerciales, con o sin plastificado</div><div class="itags"><div class="itag">Full color</div><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="icbody"><div class="icname">Plotter</div><div class="icdesc">Impresión de gran formato para carteles y banners</div><div class="itags"><div class="itag">Vinil</div><div class="itag">Lona</div><div class="itag">Gran formato</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="icbody"><div class="icname">Laminados</div><div class="icdesc">Protección mate o brillante para tus impresiones</div><div class="itags"><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/carpetas_s.jpg" alt="Carpetas"></div><div class="icbody"><div class="icname">Carpetas</div><div class="icdesc">Corporativas, troqueladas y personalizadas</div><div class="itags"><div class="itag">Troquelada</div><div class="itag">Personalizada</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/talonarios_s.jpg" alt="Talonarios"></div><div class="icbody"><div class="icname">Talonarios</div><div class="icdesc">Remitos, recibos y formularios personalizados</div><div class="itags"><div class="itag">50 hojas</div><div class="itag">100 hojas</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laser2_s.jpg" alt="Bajadas Laser"></div><div class="icbody"><div class="icname">Bajadas Láser</div><div class="icdesc">Impresión láser de alta calidad y precisión</div><div class="itags"><div class="itag">Alta calidad</div><div class="itag">Rápido</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/sellos_s.jpg" alt="Sellos"></div><div class="icbody"><div class="icname">Sellos</div><div class="icdesc">Sellos personalizados para empresas y profesionales</div><div class="itags"><div class="itag">Automático</div><div class="itag">Personalizado</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/volantes_s.jpg" alt="Volantes"></div><div class="icbody"><div class="icname">Volantes</div><div class="icdesc">Volantes full color para publicidad y eventos</div><div class="itags"><div class="itag">15x21 cm</div><div class="itag">10x15 cm</div><div class="itag">Full color</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
     </div>
   </section>
   <div class="icta">
     <div class="icta-text"><h3>¿No encontrás lo que buscás?</h3><p>Consultanos por cualquier tipo de impresión o servicio gráfico</p></div>
     <div class="icta-btns">
-      <button class="bwa" onclick="window.open('https://wa.me/5491166067511','_blank')">💬 Escribinos por WhatsApp</button>
-      <button class="bmail" onclick="window.location='mailto:impresioneslaroca@hotmail.com'">✉️ impresioneslaroca@hotmail.com</button>
+      <button class="bwa" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Escribinos por WhatsApp</button>
+      <button class="bmail" onclick="window.location='mailto:impresioneslaroca2@hotmail.com'">✉️ impresioneslaroca2@hotmail.com</button>
     </div>
   </div>
   <div class="iinfo">
     <div class="iicard"><div class="iiicon">📍</div><div class="iititle">3 Sucursales CABA</div><div class="iitext">Terrero 16<br>Rivera Indarte 70<br>Av. Rivadavia 6385</div></div>
-    <div class="iicard"><div class="iiicon">⏱️</div><div class="iititle">Entrega en 24hs</div><div class="iitext">Lun–Vie 9–20hs<br>Sáb 10–17hs<br>Rivadavia Sáb hasta 20hs</div></div>
-    <div class="iicard"><div class="iiicon">💳</div><div class="iititle">Formas de pago</div><div class="iitext">Efectivo<br>Transferencia bancaria<br>Mercado Pago</div></div>
+    <div class="iicard"><div class="iiicon">⚡</div><div class="iititle">Entregas en el día</div><div class="iitext">Lun–Vie 9–20hs<br>Sáb 10–17hs<br>Rivadavia Sáb hasta 20hs</div></div>
+    <div class="iicard"><div class="iiicon">💳</div><div class="iititle">Formas de pago</div><div class="iitext">Efectivo<br>Transferencia bancaria<br>Mercado Pago<br>Tarjetas crédito/débito</div></div>
   </div>
   <footer>
     <div class="fbot">
-      <p>© 2026 La Roca · Librería e Imprenta · Buenos Aires</p>
+      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires · Desde 2004</p>
       <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
     </div>
   </footer>
@@ -478,7 +588,9 @@
 <script>
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
+    const target = document.getElementById('page-' + name);
+    void target.offsetWidth;
+    target.classList.add('active');
     window.scrollTo(0, 0);
     ['nh','nl','ni'].forEach(id => {
       const el = document.getElementById(id);
@@ -494,6 +606,18 @@
       this.classList.add('active');
     });
   });
+
+  // Banner dinámico librería
+  let dbnIdx = 0;
+  function dbnGo(i) {
+    dbnIdx = i;
+    const slides = document.getElementById('dbnSlides');
+    if (slides) slides.style.transform = 'translateX(-' + (i * 100) + '%)';
+    document.querySelectorAll('.dbn-dot').forEach(function(d, j) {
+      d.classList.toggle('active', j === i);
+    });
+  }
+  setInterval(function() { dbnGo((dbnIdx + 1) % 4); }, 4000);
 </script>
 </body>
 </html>
