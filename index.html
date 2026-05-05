@@ -221,6 +221,14 @@
     .hnum { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; color: white; font-family: 'DM Mono', monospace; }
     .htxt h4 { font-size: 13px; font-weight: 600; color: var(--k); margin-bottom: 2px; }
     .htxt p { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    /* SELECTED NOTICE */
+    .selected-notice { background: #fffbf0; border-top: 1px solid #f0e0a0; border-bottom: 1px solid #f0e0a0; padding: 14px 48px; }
+    .selected-inner { display: flex; align-items: center; gap: 14px; max-width: 700px; }
+    .selected-icon { font-size: 22px; flex-shrink: 0; }
+    .selected-txt { font-size: 13px; color: #7a6000; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .selected-txt strong { font-weight: 700; white-space: nowrap; }
+    .selected-txt span { font-family: 'DM Mono', monospace; font-size: 11px; color: #a08020; }
+
     .isg { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
     .icard { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.2s; }
     .icard:hover { border-color: var(--m); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(236,0,140,0.08); }
@@ -319,7 +327,6 @@
   <section class="hero">
     <div class="hero-wm">
       <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="">
-      <div class="hero-wm-txt">Imprenta y Librería</div>
     </div>
     <div class="hero-eyebrow">Buenos Aires · 3 Sucursales · Desde 2004</div>
     <h1><div>TODO LO QUE</div><div><span class="hc">IMPRIMÍS,</span></div><div>TODO LO QUE</div><div><span class="hm">ESCRIBÍS</span></div></h1>
@@ -411,7 +418,6 @@
     <div class="fg">
       <div class="fbrand">
         <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca">
-        <div class="fbrand-sub">Imprenta y Librería</div>
         <p>Con más de 20 años en Buenos Aires. Calidad, rapidez y atención personalizada. Desde 2004.</p>
       </div>
       <div class="fcol"><h4>Sucursales</h4><p>Terrero 16 · CABA</p><p>Rivera Indarte 70 · CABA</p><p>Av. Rivadavia 6385 · CABA</p></div>
@@ -549,6 +555,15 @@
     <div class="hstep"><div class="hnum" style="background:var(--c);">1</div><div class="htxt"><h4>Elegí el servicio</h4><p>Buscá lo que necesitás</p></div></div>
     <div class="hstep"><div class="hnum" style="background:var(--m);">2</div><div class="htxt"><h4>Consultá por WhatsApp</h4><p>Presupuesto al instante</p></div></div>
     <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Confirmás y listo</h4><p>Retirás el mismo día</p></div></div>
+  </div>
+  <div class="selected-notice">
+    <div class="selected-inner">
+      <span class="selected-icon">⏳</span>
+      <div class="selected-txt">
+        <strong>Productos seleccionados</strong>
+        <span>Algunos servicios pueden tener un plazo de entrega mayor al habitual. Consultá al hacer tu pedido.</span>
+      </div>
+    </div>
   </div>
   <section class="sec">
     <div class="sec-head"><div><h2>Nuestros servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto al instante</p></div></div>
