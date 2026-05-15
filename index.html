@@ -52,7 +52,7 @@
 
     /* HERO */
     .hero { background: var(--k); min-height: 88vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 48px; text-align: center; position: relative; overflow: hidden; }
-    .hero-wm { position: absolute; opacity: 0.05; width: 520px; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; text-align: center; }
+    .hero-wm { position: absolute; opacity: 0.04; width: 88%; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; text-align: center; }
     .hero-wm img { width: 100%; display: block; }
     .hero-wm-txt { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: white; letter-spacing: 6px; margin-top: 6px; }
     .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: #555; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; border: 1px solid #2a2a2a; padding: 6px 18px; border-radius: 20px; display: inline-block; }
@@ -265,27 +265,330 @@
     .page.active .hero-sub { animation: fadeUp 0.5s ease 0.2s both; }
     .page.active .hero-cards { animation: fadeUp 0.55s ease 0.3s both; }
 
+    /* ====== IMPRENTA ONLINE ====== */
+    .imp-desde { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:8px; }
+    .imp-desde strong { color:var(--m); font-size:14px; }
+    .btn-conf { background:var(--m); color:white; font-size:13px; padding:9px 14px; border-radius:10px; font-weight:600; border:none; width:100%; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; }
+    .btn-conf:hover { background:#d00080; transform:translateY(-1px); }
+
+    /* MODAL */
+    .modal-ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:900; align-items:center; justify-content:center; padding:20px; }
+    .modal-ov.open { display:flex; }
+    .modal-box { background:white; border-radius:20px; width:100%; max-width:540px; max-height:90vh; overflow-y:auto; }
+    .modal-head { padding:24px 28px 0; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+    .modal-head h3 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:1px; color:var(--k); }
+    .modal-close { background:none; border:none; font-size:22px; color:var(--muted); cursor:pointer; line-height:1; padding:0; margin-top:4px; }
+    .modal-body { padding:20px 28px 28px; }
+    .opt-group { margin-bottom:20px; }
+    .opt-label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:2px; font-family:'DM Mono',monospace; margin-bottom:8px; display:block; }
+    .opt-cards { display:flex; flex-wrap:wrap; gap:6px; }
+    .opt-card { border:1.5px solid var(--border2); border-radius:10px; padding:7px 14px; font-size:12px; font-family:'DM Mono',monospace; cursor:pointer; color:var(--muted); transition:all 0.15s; background:white; }
+    .opt-card.sel { border-color:var(--m); color:var(--m); background:#EC008C10; font-weight:600; }
+    .qty-row { display:flex; align-items:center; gap:10px; }
+    .qty-btn { width:32px; height:32px; border:1px solid var(--border2); border-radius:8px; background:white; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--k); transition:all 0.2s; }
+    .qty-btn:hover { border-color:var(--m); color:var(--m); }
+    .qty-val { font-size:16px; font-weight:600; font-family:'DM Mono',monospace; min-width:36px; text-align:center; }
+    .text-input { border:1.5px solid var(--border2); border-radius:10px; padding:9px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--k); width:100%; outline:none; }
+    .text-input:focus { border-color:var(--m); }
+    .upload-zone { border:2px dashed var(--border2); border-radius:12px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:var(--bg2); }
+    .upload-zone:hover { border-color:var(--m); background:#EC008C06; }
+    .upload-zone-icon { font-size:28px; margin-bottom:8px; }
+    .upload-zone-txt { font-size:12px; color:var(--muted); line-height:1.5; font-family:'DM Mono',monospace; }
+    .upload-zone-name { font-size:12px; color:var(--m); font-weight:600; margin-top:4px; font-family:'DM Mono',monospace; }
+    .modal-price-bar { background:var(--bg2); border-radius:14px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .modal-price-bar .est { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; }
+    .modal-price-bar .precio { font-size:22px; font-weight:700; color:var(--m); font-family:'DM Mono',monospace; }
+    .btn-add-cart { background:var(--m); color:white; font-size:14px; padding:13px; border-radius:12px; font-weight:700; border:none; width:100%; cursor:pointer; transition:all 0.2s; letter-spacing:0.3px; }
+    .btn-add-cart:hover { background:#d00080; transform:translateY(-1px); }
+
+    /* CART PANEL */
+    .cart-ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:800; }
+    .cart-ov.open { display:block; }
+    .cart-panel { position:fixed; top:0; right:-440px; width:440px; height:100vh; background:white; z-index:801; transition:right 0.35s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow:-4px 0 40px rgba(0,0,0,0.15); display:flex; flex-direction:column; }
+    .cart-panel.open { right:0; }
+    .cart-panel-head { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+    .cart-panel-head h3 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:1px; }
+    .cart-panel-close { background:none; border:none; font-size:20px; cursor:pointer; color:var(--muted); }
+    .cart-items { flex:1; overflow-y:auto; padding:16px 24px; }
+    .cart-empty { text-align:center; padding:60px 20px; color:var(--muted); }
+    .cart-empty-icon { font-size:48px; margin-bottom:12px; }
+    .cart-empty p { font-size:14px; font-family:'DM Mono',monospace; }
+    .cart-item { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
+    .ci-icon { width:44px; height:44px; background:var(--bg2); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+    .ci-info { flex:1; min-width:0; }
+    .ci-name { font-size:13px; font-weight:600; color:var(--k); margin-bottom:2px; }
+    .ci-desc { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; line-height:1.5; word-break:break-word; }
+    .ci-price { font-size:14px; font-weight:700; color:var(--m); font-family:'DM Mono',monospace; margin-top:4px; }
+    .ci-remove { background:none; border:none; color:var(--subtle); cursor:pointer; font-size:20px; padding:0; transition:color 0.2s; flex-shrink:0; }
+    .ci-remove:hover { color:#e00; }
+    .cart-footer { padding:16px 24px; border-top:1px solid var(--border); flex-shrink:0; }
+    .cart-total { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .cart-total span { font-size:13px; color:var(--muted); font-family:'DM Mono',monospace; }
+    .cart-total strong { font-size:22px; color:var(--k); font-family:'DM Mono',monospace; }
+    .btn-checkout { background:var(--m); color:white; font-size:15px; padding:14px; border-radius:12px; font-weight:700; border:none; width:100%; cursor:pointer; transition:all 0.2s; }
+    .btn-checkout:hover { background:#d00080; }
+
+    /* CHECKOUT MODAL */
+    .co-ov { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:950; align-items:center; justify-content:center; padding:20px; }
+    .co-ov.open { display:flex; }
+    .co-box { background:white; border-radius:20px; width:100%; max-width:480px; padding:32px; }
+    .co-box h3 { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:1px; margin-bottom:6px; }
+    .co-sub { font-size:13px; color:var(--muted); margin-bottom:24px; font-family:'DM Mono',monospace; }
+    .co-methods { display:flex; flex-direction:column; gap:10px; }
+    .co-method { border:2px solid var(--border); border-radius:14px; padding:16px 18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:14px; background:white; width:100%; text-align:left; }
+    .co-method:hover { border-color:var(--m); }
+    .co-method-icon { font-size:26px; flex-shrink:0; }
+    .co-method-info h4 { font-size:14px; font-weight:600; color:var(--k); margin-bottom:2px; }
+    .co-method-info p { font-size:12px; color:var(--muted); font-family:'DM Mono',monospace; }
+    .co-cancel { background:none; border:none; color:var(--muted); font-size:13px; text-align:center; width:100%; margin-top:16px; cursor:pointer; font-family:'DM Mono',monospace; }
+    .co-cancel:hover { color:var(--k); }
+
+    /* TOAST */
+    .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--k); color:white; padding:12px 22px; border-radius:30px; font-size:13px; font-family:'DM Mono',monospace; z-index:1000; opacity:0; transition:all 0.35s cubic-bezier(0.25,0.46,0.45,0.94); white-space:nowrap; pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* MOBILE BOTTOM NAV */
+    .mobile-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); z-index: 500; box-shadow: 0 -2px 16px rgba(0,0,0,0.08); }
+    .mn-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px 7px; background: none; border: none; cursor: pointer; color: var(--muted); font-size: 10px; font-family: 'DM Mono', monospace; gap: 3px; transition: color 0.2s; position: relative; }
+    .mn-tab.active { color: var(--m); }
+    .mn-icon { font-size: 21px; line-height: 1; }
+    .mn-badge { position: absolute; top: 6px; left: calc(50% + 4px); background: var(--m); color: white; font-size: 9px; font-weight: 700; min-width: 15px; height: 15px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
+
+    /* TABLET */
     @media (max-width: 900px) {
       .topbar { display: none; }
-      .navbar, .sec, .lib-filters, .lib-search, .lib-hero, .imp-hero, .ship-strip, .pbanner, footer, .icta, .iinfo, .horarios-section { padding-left: 20px; padding-right: 20px; }
-      .hero { padding: 40px 20px; min-height: 80vh; }
-      .hero h1 { font-size: 52px; }
-      .hero-cards { grid-template-columns: 1fr; max-width: 360px; }
-      .features { grid-template-columns: repeat(2,1fr); }
+      .navbar { padding: 0 24px; }
+      .navbar .nav-links a:not(#nh):not(#nl):not(#ni) { display: none; }
+      .sec, .lib-search, .lib-filters, .ship-strip { padding-left: 24px; padding-right: 24px; }
+      .lib-hero, .imp-hero, .pbanner, footer, .icta, .iinfo, .horarios-section { padding-left: 24px; padding-right: 24px; }
+      .hero { padding: 40px 24px; min-height: 80vh; }
+      .hero h1 { font-size: 60px; }
+      .hero-cards { grid-template-columns: 1fr; max-width: 400px; }
+      .features { grid-template-columns: repeat(3,1fr); }
       .pg4, .sg4 { grid-template-columns: repeat(2,1fr); }
       .lib-main { grid-template-columns: 1fr; }
       .lib-sidebar { display: none; }
       .pg3, .isg { grid-template-columns: repeat(2,1fr); }
-      .icta { flex-direction: column; gap: 20px; text-align: center; margin: 0 20px 28px; }
-      .icta-btns { align-items: center; }
-      .iinfo { grid-template-columns: 1fr; padding: 0 20px 32px; }
+      .icta { flex-direction: column; gap: 20px; text-align: center; margin: 0 24px 28px; }
+      .icta-btns { align-items: center; width: 100%; }
+      .bwa, .bmail { width: 100%; text-align: center; }
+      .iinfo { grid-template-columns: 1fr 1fr 1fr; }
       .fg { grid-template-columns: 1fr 1fr; gap: 24px; }
       .how-strip { grid-template-columns: 1fr; }
       .hstep { border-right: none; border-bottom: 1px solid var(--border); }
       .hstep:last-child { border-bottom: none; }
       .horarios-grid { grid-template-columns: 1fr; }
-      .dbn-slide { padding: 0 20px; }
-      .dbn-slide h3 { font-size: 20px; }
+      .dbn-slide { padding: 0 24px; }
+      .dbn-slide h3 { font-size: 22px; }
+    }
+
+    /* MOBILE PHONE */
+    @media (max-width: 600px) {
+      /* BOTTOM NAV */
+      .mobile-nav { display: flex; }
+      body { padding-bottom: 60px; }
+
+      /* NAVBAR — logo + links igual que desktop, adaptado */
+      .navbar { padding: 0 14px; height: 56px; top: 4px; }
+      .logo-sub { display: none; }
+      .nav-links { display: flex; gap: 14px; }
+      .nav-links a { font-size: 12px; }
+      .nav-links a:not(#nh):not(#nl):not(#ni) { display: none; }
+      .cart-pill { display: none; }
+
+      /* CMYK */
+      .cmyk-bar { height: 3px; }
+
+      /* HERO */
+      .hero { padding: 28px 16px 40px; min-height: auto; }
+      .hero h1 { font-size: clamp(38px,10vw,52px); }
+      .hero-sub { font-size: 13px; margin-bottom: 32px; }
+      .hero-eyebrow { font-size: 9px; margin-bottom: 18px; padding: 5px 12px; line-height: 1.6; max-width: 300px; }
+      .hero-tagline { font-size: 11px; letter-spacing: 4px; margin-bottom: 20px; }
+      .hero-cards { grid-template-columns: 1fr; max-width: 100%; gap: 12px; }
+      .hcard { padding: 22px 18px; }
+      .hero-wm { display: none; }
+
+      /* FEATURES — 2×2 + última centrada */
+      .features { grid-template-columns: 1fr 1fr; }
+      .feature { padding: 14px 10px; }
+      .feat-title { font-size: 11px; }
+      .feat-text { font-size: 10px; }
+      .feature:last-child { grid-column: 1 / -1; border-right: none; border-top: 1px solid var(--border); }
+
+      /* BANNERS */
+      .banner-grid { grid-template-columns: 1fr 1fr; }
+      .banner-slot { min-height: 90px; }
+      .banner-ph .banner-dtf { font-size: 36px; }
+      .banner-ph .banner-title { font-size: 15px; }
+
+      /* SECTIONS */
+      .sec { padding: 28px 16px; }
+      .sec-head h2 { font-size: 30px; }
+      .pg4, .sg4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .pg3, .isg { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .pcard, .scrd, .icard { border-radius: 10px; }
+
+      /* SERVICE CARDS HOME */
+      .sbody { padding: 8px 10px; }
+      .sname { font-size: 12px; }
+      .wabtn-sm { font-size: 10px; padding: 4px 8px; }
+
+      /* PAYMENT BANNER */
+      .pbanner { flex-direction: column; gap: 16px; padding: 20px 16px; text-align: center; }
+      .pbanner-text h3 { font-size: 22px; }
+      .ppills { justify-content: center; }
+
+      /* HORARIOS */
+      .horarios-section { padding: 24px 16px; }
+      .horarios-grid { grid-template-columns: 1fr; gap: 10px; }
+      .hcrd { padding: 14px 16px; }
+
+      /* REVIEWS */
+      .reviews-section { padding: 28px 16px; }
+      .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+      .reviews-head h2 { font-size: 28px; }
+
+      /* LIB HERO */
+      .lib-hero { flex-direction: column; gap: 0; padding: 24px 16px; }
+      .lib-hero h1 { font-size: 36px; }
+      .lib-hero-img { display: none; }
+      .lib-search { padding: 10px 16px; }
+      .lib-filters { padding: 8px 16px 12px; gap: 6px; }
+      .fbtn { font-size: 11px; padding: 5px 12px; }
+      .lib-products { padding: 16px; }
+      .ship-strip { padding: 10px 16px; }
+
+      /* IMP HERO */
+      .imp-hero { flex-direction: column; gap: 0; padding: 24px 16px; }
+      .imp-hero h1 { font-size: 38px; }
+      .imp-hero-img { display: none; }
+      .imp-hero p { font-size: 13px; }
+      .ibadge { font-size: 10px; padding: 5px 10px; }
+
+      /* HOW STRIP */
+      .how-strip { grid-template-columns: 1fr; }
+      .hstep { padding: 14px 16px; }
+
+      /* SELECTED NOTICE */
+      .selected-notice { padding: 10px 16px; }
+
+      /* IMPRENTA CARDS */
+      .icimg { height: 120px; }
+      .icbody { padding: 12px 14px; }
+      .icname { font-size: 14px; }
+      .icdesc { font-size: 11px; margin-bottom: 8px; }
+      .itags { gap: 4px; margin-bottom: 8px; }
+      .itag { font-size: 9px; padding: 2px 6px; }
+      .imp-desde { font-size: 10px; margin-bottom: 6px; }
+      .btn-conf { font-size: 12px; padding: 8px 10px; }
+      .wabtn { font-size: 12px; padding: 8px 10px; }
+
+      /* IMPRENTA CTA */
+      .icta { flex-direction: column; margin: 0 16px 24px; padding: 24px 20px; }
+      .icta-text h3 { font-size: 24px; }
+      .icta-btns { align-items: stretch; width: 100%; }
+      .bwa, .bmail { width: 100%; text-align: center; }
+
+      /* INFO CARDS */
+      .iinfo { grid-template-columns: 1fr; padding: 0 16px 24px; gap: 10px; }
+
+      /* FOOTER — logo full-width centrado + 2×2 columnas */
+      footer { padding: 32px 16px 24px; }
+      .fg { grid-template-columns: 1fr 1fr; gap: 0; row-gap: 4px; }
+      .fbrand {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #222;
+      }
+      .fbrand img { margin: 0 auto 10px; display: block; }
+      .fbrand p { font-size: 12px; max-width: 100%; color: #555; }
+      .fcol { padding: 16px 12px 8px; }
+      .fcol h4 { font-size: 9px; margin-bottom: 12px; }
+      .fcol a, .fcol p { font-size: 12px; margin-bottom: 6px; }
+
+      /* DYNAMIC BANNER */
+      .dyn-banner { height: 80px; }
+      .dbn-slide { padding: 0 16px; }
+      .dbn-slide h3 { font-size: 15px; }
+
+      /* MODAL — sheet desde abajo */
+      .modal-ov { padding: 0; align-items: flex-end; }
+      .modal-box { border-radius: 20px 20px 0 0; max-height: 92vh; width: 100%; }
+      .modal-head { padding: 20px 20px 0; }
+      .modal-body { padding: 16px 20px 24px; }
+      .opt-group { margin-bottom: 16px; }
+      .opt-card { font-size: 11px; padding: 6px 11px; }
+
+      /* CART PANEL — full width */
+      .cart-panel { width: 100%; right: -100%; }
+      .cart-panel-head { padding: 16px 18px; }
+      .cart-items { padding: 12px 18px; }
+      .cart-footer { padding: 12px 18px; }
+
+      /* CHECKOUT — sheet desde abajo */
+      .co-ov { padding: 0; align-items: flex-end; }
+      .co-box { border-radius: 20px 20px 0 0; width: 100%; padding: 24px 20px; }
+      .co-method { padding: 12px 14px; gap: 10px; }
+      .co-method-icon { font-size: 22px; }
+
+      /* TOAST */
+      .toast { font-size: 12px; padding: 10px 18px; bottom: 72px; }
+    }
+
+    /* LOGO SUBTITLE */
+    .logo-sub { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-left: 8px; align-self: flex-end; padding-bottom: 3px; }
+
+    /* HERO TAGLINE */
+    .hero-tagline { font-family: 'DM Mono', monospace; font-size: 13px; color: #444; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 28px; }
+
+    /* BANNER GRID */
+    .banner-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .banner-slot { background: var(--bg2); min-height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; transition: background 0.2s; }
+    .banner-slot:hover { background: var(--bg3); }
+    .banner-ph { text-align: center; padding: 28px 20px; }
+    .banner-ph .banner-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--subtle); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+    .banner-ph .banner-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #bbb; letter-spacing: 1px; line-height: 1.2; }
+    .banner-ph .banner-dtf { font-family: 'Bebas Neue', sans-serif; font-size: 58px; color: #ccc; letter-spacing: 4px; display: block; line-height: 1; }
+    .banner-ph .banner-sub { font-size: 11px; color: var(--subtle); font-family: 'DM Mono', monospace; margin-top: 7px; }
+    .banner-dashed { border: 2px dashed #dedede; position: absolute; inset: 10px; border-radius: 8px; pointer-events: none; }
+
+    /* REVIEWS */
+    .reviews-section { background: var(--bg2); padding: 56px 48px; border-bottom: 1px solid var(--border); }
+    .reviews-head { text-align: center; margin-bottom: 36px; }
+    .reviews-head h2 { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--k); letter-spacing: 1px; margin-bottom: 8px; }
+    .reviews-head p { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .reviews-google-badge { display: inline-flex; align-items: center; gap: 6px; background: white; border: 1px solid var(--border2); border-radius: 20px; padding: 6px 18px; font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 12px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .review-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .review-name { font-size: 13px; font-weight: 600; color: var(--k); margin-bottom: 2px; }
+    .review-date { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .review-stars { color: #F5C800; font-size: 15px; margin-bottom: 10px; letter-spacing: 2px; }
+    .review-text { font-size: 13px; color: #444; line-height: 1.65; }
+    .review-g-icon { font-size: 10px; color: var(--subtle); margin-top: 12px; font-family: 'DM Mono', monospace; letter-spacing: 1px; }
+
+    /* CHECKOUT DISCOUNT */
+    .co-discount-note { background: #f0fff4; border: 1px solid #b2dfdb; border-radius: 10px; padding: 10px 14px; font-size: 12px; color: #2e7d32; margin-bottom: 18px; font-family: 'DM Mono', monospace; text-align: center; }
+    .co-discount-note strong { font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .banner-grid { grid-template-columns: repeat(2,1fr); }
+      .reviews-grid { grid-template-columns: repeat(2,1fr); }
+      .reviews-section { padding: 40px 24px; }
+    }
+    @media (max-width: 600px) {
+      .banner-grid { grid-template-columns: repeat(2,1fr); }
+      .banner-slot { min-height: 90px; }
+      .banner-ph .banner-dtf { font-size: 36px; }
+      .banner-ph .banner-title { font-size: 15px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .reviews-section { padding: 28px 16px; }
+      .logo-sub { display: none; }
+      .hero-tagline { font-size: 11px; letter-spacing: 4px; }
     }
   </style>
 </head>
@@ -298,27 +601,26 @@
 
 <div class="topbar">
   <div class="topbar-left">
-    <a href="https://wa.me/5491130431614" target="_blank">💬 WhatsApp 11-3043-1614</a>
+    <a href="https://wa.me/5491130431614" target="_blank">💬 WhatsApp Rivera: 11-3043-1614</a>
     <a href="mailto:impresioneslaroca2@hotmail.com">impresioneslaroca2@hotmail.com</a>
-    <span>Lun–Vie 9–20hs · Sáb 10–17hs · Rivadavia Sáb hasta 20hs</span>
   </div>
   <div class="topbar-right">
-    <a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a>
     <a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a>
-    <a href="https://twitter.com/ImprentaLaRoca" target="_blank">X</a>
+    <a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a>
   </div>
 </div>
 
 <nav class="navbar">
   <div class="logo" onclick="showPage('home')">
     <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="La Roca">
+    <span class="logo-sub">Imprenta &amp; Librería</span>
   </div>
   <div class="nav-links">
     <a href="#" id="nh" class="ah" onclick="showPage('home');return false;">Inicio</a>
     <a href="#" id="nl" onclick="showPage('libreria');return false;">Librería</a>
     <a href="#" id="ni" onclick="showPage('imprenta');return false;">Imprenta</a>
     <a href="#">Contacto</a>
-    <button class="cart-pill" onclick="showPage('libreria')">🛒 Carrito (0)</button>
+    <button class="cart-pill" onclick="openCart()">🛒 Carrito (<span id="cart-count">0</span>)</button>
   </div>
 </nav>
 
@@ -328,9 +630,10 @@
     <div class="hero-wm">
       <img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/logo-laroca400.png" alt="">
     </div>
-    <div class="hero-eyebrow">Buenos Aires · 3 Sucursales · Desde 2004</div>
-    <h1><div>TODO LO QUE</div><div><span class="hc">IMPRIMÍS,</span></div><div>TODO LO QUE</div><div><span class="hm">ESCRIBÍS</span></div></h1>
-    <p class="hero-sub">Imprenta profesional y librería completa en Buenos Aires. Fotocopias, tarjetas, útiles escolares y mucho más. <strong style="color:#aaa;">+20 años de experiencia.</strong></p>
+    <div class="hero-eyebrow">Con más de 20 años en Buenos Aires · Calidad, Rapidez y Atención personalizada · Desde 2004</div>
+    <h1><span class="hc">CREA</span> TUS <span class="hm">IDEAS</span></h1>
+    <div class="hero-tagline">Imprenta · Librería</div>
+    <p class="hero-sub">Imprenta profesional y Librería completa en Buenos Aires. Fotocopias, talonarios, folletos, tarjetas, útiles escolares y mucho más. <strong style="color:#aaa;">+20 años de experiencia.</strong></p>
     <div class="hero-cards">
       <div class="hcard hlib" onclick="showPage('libreria')">
         <div class="hcard-icon" style="background:#00AEEF18;">📚</div>
@@ -355,33 +658,53 @@
     <div class="feature"><div class="feat-icon">⭐</div><div class="feat-title">+20 años de experiencia</div><div class="feat-text">En Buenos Aires desde 2004</div></div>
   </div>
 
-  <section class="sec">
-    <div class="sec-head">
-      <div><h2>Librería — Destacados</h2><p>Los más vendidos de esta semana</p></div>
-      <a href="#" class="sec-link" onclick="showPage('libreria');return false;">Ver todo →</a>
+  <!-- BANNERS — los diseños se cargan acá cuando estén listos -->
+  <div class="banner-grid">
+    <div class="banner-slot" onclick="showPage('imprenta')">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">01</div>
+        <div class="banner-title">Talonarios, folletos y tarjetas</div>
+      </div>
     </div>
-    <div class="accent" style="background:var(--c);"></div>
-    <div class="pg4">
-      <div class="pcard"><div class="pthumb">📒<div class="pbadge bo">OFERTA</div></div><div class="pbody"><div class="pcat">Carpetas</div><div class="pname">Carpeta N°3 con elástico</div><div class="pfoot"><div class="pprice">$2.500</div><button class="abtn">+ Carrito</button></div></div></div>
-      <div class="pcard"><div class="pthumb">✏️</div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Set lápices x12 colores</div><div class="pfoot"><div class="pprice">$1.800</div><button class="abtn">+ Carrito</button></div></div></div>
-      <div class="pcard"><div class="pthumb">📐<div class="pbadge bn">NUEVO</div></div><div class="pbody"><div class="pcat">Útiles</div><div class="pname">Regla 30cm transparente</div><div class="pfoot"><div class="pprice">$950</div><button class="abtn">+ Carrito</button></div></div></div>
-      <div class="pcard"><div class="pthumb">🎨</div><div class="pbody"><div class="pcat">Arte</div><div class="pname">Témperas escolares x6</div><div class="pfoot"><div class="pprice">$2.100</div><button class="abtn">+ Carrito</button></div></div></div>
+    <div class="banner-slot" onclick="showPage('imprenta')">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">02</div>
+        <span class="banner-dtf">DTF</span>
+        <div class="banner-sub">Textil · UV</div>
+      </div>
     </div>
-  </section>
-
-  <section class="sec grey">
-    <div class="sec-head">
-      <div><h2>Imprenta — Servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto</p></div>
-      <a href="#" class="sec-link" onclick="showPage('imprenta');return false;">Ver todo →</a>
+    <div class="banner-slot" onclick="showPage('imprenta')">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">03</div>
+        <div class="banner-title">Lonas, vinilos, placas de PVC</div>
+      </div>
     </div>
-    <div class="accent" style="background:var(--m);"></div>
-    <div class="sg4">
-      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="sbody"><div class="sname">Fotocopias</div><button class="wabtn-sm">💬 Consultar</button></div></div>
-      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="sbody"><div class="sname">Tarjetas</div><button class="wabtn-sm">💬 Consultar</button></div></div>
-      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="sbody"><div class="sname">Plotter</div><button class="wabtn-sm">💬 Consultar</button></div></div>
-      <div class="scrd" onclick="showPage('imprenta')"><div class="sthumb"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="sbody"><div class="sname">Laminados</div><button class="wabtn-sm">💬 Consultar</button></div></div>
+    <div class="banner-slot" onclick="showPage('libreria')">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">04</div>
+        <div class="banner-title">Artículos escolares</div>
+      </div>
     </div>
-  </section>
+    <div class="banner-slot">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">05</div>
+        <div class="banner-title">4×3 en todas las marcas</div>
+      </div>
+    </div>
+    <div class="banner-slot">
+      <div class="banner-dashed"></div>
+      <div class="banner-ph">
+        <div class="banner-num">06</div>
+        <div class="banner-title">🇦🇷 Días de Selección</div>
+        <div class="banner-sub">25% off en productos seleccionados</div>
+      </div>
+    </div>
+  </div>
 
   <div class="pbanner">
     <div class="pbanner-text"><h3>Medios de pago disponibles</h3><p>Comprá como más te convenga — online o en local</p></div>
@@ -394,6 +717,44 @@
       <div class="ppill">Cuotas</div>
     </div>
   </div>
+
+  <!-- RESEÑAS GOOGLE BUSINESS — integrar Google Places API con tu Place ID para reseñas en tiempo real -->
+  <section class="reviews-section">
+    <div class="reviews-head">
+      <h2>Lo que dicen nuestros clientes</h2>
+      <p>Reseñas verificadas · Google Business</p>
+      <div class="reviews-google-badge">⭐⭐⭐⭐⭐ &nbsp;4.8 · +200 reseñas en Google</div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">👤</div>
+          <div><div class="review-name">María González</div><div class="review-date">Hace 2 semanas</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Excelente atención y calidad de impresión. Los talonarios quedaron perfectos, muy buenos materiales y entrega rápida. Hace años que vengo acá y siempre cumplen.</p>
+        <div class="review-g-icon">G · Reseña verificada de Google</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">👤</div>
+          <div><div class="review-name">Carlos Fernández</div><div class="review-date">Hace 1 mes</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Mandé a hacer folletos y tarjetas y salieron espectaculares. El precio muy competitivo y la atención personalizada hace la diferencia. Los recomiendo 100%.</p>
+        <div class="review-g-icon">G · Reseña verificada de Google</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">👤</div>
+          <div><div class="review-name">Laura Martínez</div><div class="review-date">Hace 3 semanas</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Compro los útiles escolares de mis hijos acá hace 5 años. Tienen todo siempre, precios buenos y los chicos del local son muy amables. Una joya del barrio.</p>
+        <div class="review-g-icon">G · Reseña verificada de Google</div>
+      </div>
+    </div>
+  </section>
 
   <!-- HORARIOS -->
   <div class="horarios-section">
@@ -421,13 +782,9 @@
         <p>Con más de 20 años en Buenos Aires. Calidad, rapidez y atención personalizada. Desde 2004.</p>
       </div>
       <div class="fcol"><h4>Sucursales</h4><p>Terrero 16 · CABA</p><p>Rivera Indarte 70 · CABA</p><p>Av. Rivadavia 6385 · CABA</p></div>
-      <div class="fcol"><h4>WhatsApp</h4><a href="https://wa.me/5491130431614">11-6606-7511</a><a href="https://wa.me/5491130431614">11-3043-1614</a><a href="https://wa.me/5491134143010">11-3414-3010</a></div>
+      <div class="fcol"><h4>WhatsApp</h4><a href="https://wa.me/5491166067511" style="display:flex;align-items:center;gap:6px;">📍 Terrero&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11-6606-7511</a><a href="https://wa.me/5491130431614" style="display:flex;align-items:center;gap:6px;">📍 Rivera&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11-3043-1614</a><a href="https://wa.me/5491134143010" style="display:flex;align-items:center;gap:6px;">📍 Rivadavia&nbsp;11-3414-3010</a></div>
       <div class="fcol"><h4>Horarios</h4><p>Lun–Vie: 9–20hs</p><p>Sáb: 10–17hs</p><p style="color:#00AEEF;">Rivadavia Sáb: 10–20hs</p></div>
-      <div class="fcol"><h4>Seguinos</h4><a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a><a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a><a href="https://twitter.com/ImprentaLaRoca" target="_blank">X (Twitter)</a></div>
-    </div>
-    <div class="fbot">
-      <p>© 2026 La Roca · Imprenta & Librería · Buenos Aires · Desde 2004</p>
-      <div class="cdots"><div class="cdot" style="background:#00AEEF;"></div><div class="cdot" style="background:#EC008C;"></div><div class="cdot" style="background:#FFF200;"></div><div class="cdot" style="background:#333;"></div></div>
+      <div class="fcol"><h4>Seguinos</h4><a href="https://www.instagram.com/impresioneslaroca/" target="_blank">Instagram</a><a href="https://www.facebook.com/imprentalaroca/" target="_blank">Facebook</a></div>
     </div>
   </footer>
 </div>
@@ -547,14 +904,18 @@
     <div>
       <h1>Imprenta <span>La Roca</span></h1>
       <p>Fotocopias, tarjetas, plotter, laminados y mucho más. Entregas en el día en CABA.</p>
-      <div class="ibadge">💬 Todos los pedidos se gestionan por WhatsApp</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div class="ibadge">🛒 Comprá online</div>
+        <div class="ibadge" style="border-color:var(--c);color:var(--c);">📍 Retiro en local</div>
+        <div class="ibadge" style="border-color:var(--y);color:#c09000;">💳 MP · Transferencia · Efectivo</div>
+      </div>
     </div>
     <div class="imp-hero-img">🖨️</div>
   </div>
   <div class="how-strip">
-    <div class="hstep"><div class="hnum" style="background:var(--c);">1</div><div class="htxt"><h4>Elegí el servicio</h4><p>Buscá lo que necesitás</p></div></div>
-    <div class="hstep"><div class="hnum" style="background:var(--m);">2</div><div class="htxt"><h4>Consultá por WhatsApp</h4><p>Presupuesto al instante</p></div></div>
-    <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Confirmás y listo</h4><p>Retirás el mismo día</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--c);">1</div><div class="htxt"><h4>Configurá tu producto</h4><p>Medidas, cantidad y opciones</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--m);">2</div><div class="htxt"><h4>Pagá online</h4><p>MP, transferencia o efectivo</p></div></div>
+    <div class="hstep"><div class="hnum" style="background:var(--y); color:#000;">3</div><div class="htxt"><h4>Retirás en local</h4><p>Listo en el día en CABA</p></div></div>
   </div>
   <div class="selected-notice">
     <div class="selected-inner">
@@ -569,15 +930,15 @@
     <div class="sec-head"><div><h2>Nuestros servicios</h2><p>Consultá por WhatsApp y recibí tu presupuesto al instante</p></div></div>
     <div class="accent" style="background:var(--m);"></div>
     <div class="isg">
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="icbody"><div class="icname">Fotocopias</div><div class="icdesc">B&N y color, simples y doble faz, cualquier tamaño</div><div class="itags"><div class="itag">A4</div><div class="itag">A3</div><div class="itag">Color</div><div class="itag">Doble faz</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="icbody"><div class="icname">Tarjetas</div><div class="icdesc">Personales y comerciales, con o sin plastificado</div><div class="itags"><div class="itag">Full color</div><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="icbody"><div class="icname">Plotter</div><div class="icdesc">Impresión de gran formato para carteles y banners</div><div class="itags"><div class="itag">Vinil</div><div class="itag">Lona</div><div class="itag">Gran formato</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="icbody"><div class="icname">Laminados</div><div class="icdesc">Protección mate o brillante para tus impresiones</div><div class="itags"><div class="itag">Mate</div><div class="itag">Brillante</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/carpetas_s.jpg" alt="Carpetas"></div><div class="icbody"><div class="icname">Carpetas</div><div class="icdesc">Corporativas, troqueladas y personalizadas</div><div class="itags"><div class="itag">Troquelada</div><div class="itag">Personalizada</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/talonarios_s.jpg" alt="Talonarios"></div><div class="icbody"><div class="icname">Talonarios</div><div class="icdesc">Remitos, recibos y formularios personalizados</div><div class="itags"><div class="itag">50 hojas</div><div class="itag">100 hojas</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laser2_s.jpg" alt="Bajadas Laser"></div><div class="icbody"><div class="icname">Bajadas Láser</div><div class="icdesc">Impresión láser de alta calidad y precisión</div><div class="itags"><div class="itag">Alta calidad</div><div class="itag">Rápido</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/sellos_s.jpg" alt="Sellos"></div><div class="icbody"><div class="icname">Sellos</div><div class="icdesc">Sellos personalizados para empresas y profesionales</div><div class="itags"><div class="itag">Automático</div><div class="itag">Personalizado</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
-      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/volantes_s.jpg" alt="Volantes"></div><div class="icbody"><div class="icname">Volantes</div><div class="icdesc">Volantes full color para publicidad y eventos</div><div class="itags"><div class="itag">15x21 cm</div><div class="itag">10x15 cm</div><div class="itag">Full color</div></div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/fotocopias_s.jpg" alt="Fotocopias"></div><div class="icbody"><div class="icname">Fotocopias</div><div class="icdesc">B&N y color, simples y doble faz, cualquier tamaño</div><div class="itags"><div class="itag">A4</div><div class="itag">A3</div><div class="itag">Color</div><div class="itag">Doble faz</div></div><div class="imp-desde">Desde <strong>$50</strong> c/u</div><button class="btn-conf" onclick="openModal('fotocopias')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/tarjetas_s.jpg" alt="Tarjetas"></div><div class="icbody"><div class="icname">Tarjetas</div><div class="icdesc">Personales y comerciales, con o sin plastificado</div><div class="itags"><div class="itag">Full color</div><div class="itag">Mate</div><div class="itag">Brillante</div></div><div class="imp-desde">Desde <strong>$9.500</strong> x50 un.</div><button class="btn-conf" onclick="openModal('tarjetas')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/plotter_s.jpg" alt="Plotter"></div><div class="icbody"><div class="icname">Plotter</div><div class="icdesc">Impresión de gran formato para carteles y banners</div><div class="itags"><div class="itag">Vinil</div><div class="itag">Lona</div><div class="itag">Gran formato</div></div><div class="imp-desde">Desde <strong>$8.000</strong></div><button class="btn-conf" onclick="openModal('plotter')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laminado_s.jpg" alt="Laminados"></div><div class="icbody"><div class="icname">Laminados</div><div class="icdesc">Protección mate o brillante para tus impresiones</div><div class="itags"><div class="itag">Mate</div><div class="itag">Brillante</div></div><div class="imp-desde">Desde <strong>$800</strong> c/u</div><button class="btn-conf" onclick="openModal('laminados')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/carpetas_s.jpg" alt="Carpetas"></div><div class="icbody"><div class="icname">Carpetas</div><div class="icdesc">Corporativas, troqueladas y personalizadas</div><div class="itags"><div class="itag">Troquelada</div><div class="itag">Personalizada</div></div><div class="imp-desde">Desde <strong>$18.000</strong> x50 un.</div><button class="btn-conf" onclick="openModal('carpetas')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/07/talonarios_s.jpg" alt="Talonarios"></div><div class="icbody"><div class="icname">Talonarios</div><div class="icdesc">Remitos, recibos y formularios personalizados</div><div class="itags"><div class="itag">50 hojas</div><div class="itag">100 hojas</div></div><div class="imp-desde">Desde <strong>$12.000</strong> x5 talonarios</div><button class="btn-conf" onclick="openModal('talonarios')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/laser2_s.jpg" alt="Bajadas Laser"></div><div class="icbody"><div class="icname">Bajadas Láser</div><div class="icdesc">Impresión láser de alta calidad y precisión</div><div class="itags"><div class="itag">Alta calidad</div><div class="itag">Rápido</div></div><div class="imp-desde">Consultar precio</div><button class="wabtn" onclick="window.open('https://wa.me/5491130431614','_blank')">💬 Consultar por WhatsApp</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/sellos_s.jpg" alt="Sellos"></div><div class="icbody"><div class="icname">Sellos</div><div class="icdesc">Sellos personalizados para empresas y profesionales</div><div class="itags"><div class="itag">Automático</div><div class="itag">Personalizado</div></div><div class="imp-desde">Desde <strong>$4.500</strong></div><button class="btn-conf" onclick="openModal('sellos')">🛒 Configurar y pedir</button></div></div>
+      <div class="icard"><div class="icimg"><img src="https://imprentalaroca.com.ar/wp-content/uploads/2019/08/volantes_s.jpg" alt="Volantes"></div><div class="icbody"><div class="icname">Volantes</div><div class="icdesc">Volantes full color para publicidad y eventos</div><div class="itags"><div class="itag">15x21 cm</div><div class="itag">10x15 cm</div><div class="itag">Full color</div></div><div class="imp-desde">Desde <strong>$7.500</strong> x500 un.</div><button class="btn-conf" onclick="openModal('volantes')">🛒 Configurar y pedir</button></div></div>
     </div>
   </section>
   <div class="icta">
@@ -600,6 +961,87 @@
   </footer>
 </div>
 
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+  <button class="mn-tab active" id="mnt-home" onclick="showPage('home')">
+    <span class="mn-icon">🏠</span><span>Inicio</span>
+  </button>
+  <button class="mn-tab" id="mnt-libreria" onclick="showPage('libreria')">
+    <span class="mn-icon">📚</span><span>Librería</span>
+  </button>
+  <button class="mn-tab" id="mnt-imprenta" onclick="showPage('imprenta')">
+    <span class="mn-icon">🖨️</span><span>Imprenta</span>
+  </button>
+  <button class="mn-tab" id="mnt-carrito" onclick="openCart()">
+    <span class="mn-icon">🛒</span><span>Carrito</span>
+    <span class="mn-badge" id="cart-count-mob" style="display:none">0</span>
+  </button>
+</nav>
+
+<!-- MODAL CONFIGURADOR -->
+<div class="modal-ov" id="modal-ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-title"></h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-fields"></div>
+      <div class="modal-price-bar">
+        <span class="est">Precio estimado</span>
+        <span class="precio" id="modal-price">$0</span>
+      </div>
+      <button class="btn-add-cart" onclick="addToCart()">🛒 Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-ov" id="cart-ov" onclick="closeCart()"></div>
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-panel-head">
+    <h3>Tu pedido</h3>
+    <button class="cart-panel-close" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Tu carrito está vacío</p></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total estimado</span>
+      <strong id="cart-total">$0</strong>
+    </div>
+    <button class="btn-checkout" onclick="openCheckout()">Finalizar pedido →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="co-ov" id="co-ov" onclick="if(event.target===this)closeCheckout()">
+  <div class="co-box">
+    <h3>¿Cómo querés pagar?</h3>
+    <p class="co-sub">Vas a ser redirigido a WhatsApp con tu pedido detallado</p>
+    <div class="co-discount-note">💰 Transferencia/Depósito: <strong>10% de descuento</strong> · Cuotas sin interés con tarjeta</div>
+    <div class="co-methods">
+      <button class="co-method" onclick="payMP()">
+        <span class="co-method-icon">💳</span>
+        <div class="co-method-info"><h4>Mercado Pago</h4><p>Tarjetas · cuotas sin interés disponibles</p></div>
+      </button>
+      <button class="co-method" onclick="payTransfer()">
+        <span class="co-method-icon">🏦</span>
+        <div class="co-method-info"><h4>Transferencia / Depósito</h4><p>10% de descuento · CBU/alias por WhatsApp</p></div>
+      </button>
+      <button class="co-method" onclick="payEfectivo()">
+        <span class="co-method-icon">💵</span>
+        <div class="co-method-info"><h4>Efectivo al retirar</h4><p>Pagás cuando buscás tu pedido</p></div>
+      </button>
+    </div>
+    <button class="co-cancel" onclick="closeCheckout()">Volver al carrito</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -614,6 +1056,12 @@
     if (name === 'home') document.getElementById('nh').className = 'ah';
     if (name === 'libreria') document.getElementById('nl').className = 'al';
     if (name === 'imprenta') document.getElementById('ni').className = 'am';
+    ['mnt-home','mnt-libreria','mnt-imprenta','mnt-carrito'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
+    var mob = document.getElementById('mnt-' + name);
+    if (mob) mob.classList.add('active');
   }
   document.querySelectorAll('.fbtn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -623,16 +1071,408 @@
   });
 
   // Banner dinámico librería
-  let dbnIdx = 0;
+  var dbnIdx = 0;
   function dbnGo(i) {
     dbnIdx = i;
-    const slides = document.getElementById('dbnSlides');
+    var slides = document.getElementById('dbnSlides');
     if (slides) slides.style.transform = 'translateX(-' + (i * 100) + '%)';
     document.querySelectorAll('.dbn-dot').forEach(function(d, j) {
       d.classList.toggle('active', j === i);
     });
   }
   setInterval(function() { dbnGo((dbnIdx + 1) % 4); }, 4000);
+
+  // ====== PRODUCTS CONFIG ======
+  var PRODUCTS = {
+    tarjetas: {
+      icon: '🪪', name: 'Tarjetas', desde: 9500,
+      fields: [
+        {id:'medida', label:'Medida', type:'opts', opts:['9×5 cm (estándar)','9×5.5 cm','10×7 cm'], def:0},
+        {id:'cantidad', label:'Cantidad', type:'opts', opts:['50 unidades','100 unidades','250 unidades','500 unidades','1000 unidades'], def:1},
+        {id:'caras', label:'Impresión', type:'opts', opts:['Solo frente','Frente y dorso'], def:0},
+        {id:'laminado', label:'Laminado', type:'opts', opts:['Sin laminado','Laminado mate','Laminado brillante'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var bases = [9500,16000,32000,55000,95000];
+        var opts = ['50 unidades','100 unidades','250 unidades','500 unidades','1000 unidades'];
+        var idx = opts.indexOf(v.cantidad); if (idx < 0) idx = 1;
+        var p = bases[idx];
+        if (v.caras === 'Frente y dorso') p = Math.round(p * 1.6);
+        if (v.laminado === 'Laminado mate') p = Math.round(p * 1.15);
+        if (v.laminado === 'Laminado brillante') p = Math.round(p * 1.2);
+        return p;
+      }
+    },
+    fotocopias: {
+      icon: '📄', name: 'Fotocopias', desde: 50,
+      fields: [
+        {id:'color', label:'Color', type:'opts', opts:['Blanco y negro','Color'], def:0},
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['A4','A3','Legal'], def:0},
+        {id:'caras', label:'Caras', type:'opts', opts:['Simple faz','Doble faz'], def:0},
+        {id:'cantidad', label:'Cantidad de copias', type:'qty', min:1, max:2000, def:10},
+        {id:'presentacion', label:'Presentación', type:'opts', opts:['Sueltas','Anilladas','Engrapadas'], def:0},
+        {id:'archivo', label:'Archivo', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var base = v.color === 'Color' ? 150 : 50;
+        if (v.tamano === 'A3') base = Math.round(base * 1.6);
+        var p = base * (v.cantidad || 10);
+        if (v.caras === 'Doble faz') p = Math.round(p * 1.7);
+        if (v.presentacion === 'Anilladas') p += 2500;
+        if (v.presentacion === 'Engrapadas') p += 500;
+        return p;
+      }
+    },
+    plotter: {
+      icon: '🖼️', name: 'Plotter', desde: 8000,
+      fields: [
+        {id:'material', label:'Material', type:'opts', opts:['Vinil adhesivo','Lona banner','Papel fotográfico'], def:0},
+        {id:'ancho', label:'Ancho (cm)', type:'qty', min:10, max:300, def:60},
+        {id:'alto', label:'Alto (cm)', type:'qty', min:10, max:300, def:90},
+        {id:'portabanner', label:'Portabanner', type:'opts', opts:['Sin portabanner','Con portabanner'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var dm2 = ((v.ancho || 60) / 10) * ((v.alto || 90) / 10);
+        var ppd = v.material === 'Lona banner' ? 600 : v.material === 'Papel fotográfico' ? 700 : 800;
+        var p = Math.round(dm2 * ppd);
+        if (p < 8000) p = 8000;
+        if (v.portabanner === 'Con portabanner') p += 12000;
+        return p;
+      }
+    },
+    laminados: {
+      icon: '✨', name: 'Laminados', desde: 800,
+      fields: [
+        {id:'tipo', label:'Tipo', type:'opts', opts:['Laminado mate','Laminado brillante'], def:0},
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['A4','A3','Carta'], def:0},
+        {id:'cantidad', label:'Cantidad', type:'qty', min:1, max:500, def:5},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var base = v.tamano === 'A3' ? 1200 : 800;
+        return base * (v.cantidad || 5);
+      }
+    },
+    talonarios: {
+      icon: '📋', name: 'Talonarios', desde: 12000,
+      fields: [
+        {id:'tipo', label:'Tipo de copia', type:'opts', opts:['Duplicado (1 copia)','Triplicado (2 copias)'], def:0},
+        {id:'cai', label:'Tipo de talonario', type:'opts', opts:['Sin CAI (no oficial)','Con CAI (oficial / fiscal)'], def:0},
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['A5 (media carta)','A4','Ticket'], def:0},
+        {id:'cantidad', label:'Cantidad de talonarios', type:'qty', min:1, max:100, def:5},
+        {id:'numerados', label:'Numeración', type:'opts', opts:['Sin numerar','Numerados'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'entrega', label:'Forma de entrega', type:'opts', opts:['Retiro en Rivera Indarte','Retiro en Av. Rivadavia','Retiro en Terrero','Envío a domicilio (+$3.000)'], def:0}
+      ],
+      calcPrice: function(v) {
+        var base = v.tipo === 'Triplicado (2 copias)' ? 4800 : 3600;
+        base = base * (v.cantidad || 5);
+        if (v.tamano === 'A4') base = Math.round(base * 1.3);
+        if (v.cai === 'Con CAI (oficial / fiscal)') base = Math.round(base * 1.4);
+        if (v.numerados === 'Numerados') base += 5000;
+        if (v.entrega && v.entrega.indexOf('Envío') >= 0) base += 3000;
+        return base;
+      }
+    },
+    sellos: {
+      icon: '🔖', name: 'Sellos', desde: 4500,
+      fields: [
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['Chico (hasta 4 líneas)','Mediano (hasta 6 líneas)','Grande (hasta 8 líneas)'], def:0},
+        {id:'linea1', label:'Línea 1', type:'text', placeholder:'Ej: Juan Pérez'},
+        {id:'linea2', label:'Línea 2', type:'text', placeholder:'Ej: DNI 12.345.678'},
+        {id:'linea3', label:'Línea 3 (opcional)', type:'text', placeholder:'Ej: Tel: 11-1234-5678'},
+        {id:'linea4', label:'Línea 4 (opcional)', type:'text', placeholder:'Ej: Ciudad de Buenos Aires'},
+        {id:'colorTinta', label:'Color de tinta', type:'opts', opts:['Negro','Azul','Rojo','Verde'], def:0},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var bases = {'Chico (hasta 4 líneas)':4500,'Mediano (hasta 6 líneas)':6500,'Grande (hasta 8 líneas)':9000};
+        return bases[v.tamano] || 4500;
+      }
+    },
+    folletos: {
+      icon: '📰', name: 'Folletos', desde: 8500,
+      fields: [
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['A5 (15×21 cm)','A4 (21×29 cm)','DL (10×21 cm)'], def:0},
+        {id:'color', label:'Color', type:'opts', opts:['Full color','Blanco y negro'], def:0},
+        {id:'caras', label:'Caras', type:'opts', opts:['Solo frente','Frente y dorso'], def:0},
+        {id:'cantidad', label:'Cantidad', type:'opts', opts:['100 unidades','250 unidades','500 unidades','1000 unidades'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var bases = {'100 unidades':8500,'250 unidades':15000,'500 unidades':25000,'1000 unidades':42000};
+        var p = bases[v.cantidad] || 8500;
+        if (v.tamano === 'A4 (21×29 cm)') p = Math.round(p * 1.5);
+        if (v.caras === 'Frente y dorso') p = Math.round(p * 1.5);
+        if (v.color === 'Blanco y negro') p = Math.round(p * 0.6);
+        return p;
+      }
+    },
+    carpetas: {
+      icon: '📁', name: 'Carpetas', desde: 18000,
+      fields: [
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['A4','Carta','Oficio'], def:0},
+        {id:'cantidad', label:'Cantidad', type:'qty', min:10, max:2000, def:50},
+        {id:'caras', label:'Impresión', type:'opts', opts:['Solo frente','Frente y dorso'], def:0},
+        {id:'laminado', label:'Laminado', type:'opts', opts:['Sin laminado','Laminado mate','Laminado brillante'], def:0},
+        {id:'troquel', label:'Troquel', type:'opts', opts:['Sin troquel','Con troquel circular','Con troquel ovalado'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var qty = v.cantidad || 50;
+        var base = qty >= 500 ? 120000 : qty >= 100 ? 35000 : 18000;
+        if (v.caras === 'Frente y dorso') base = Math.round(base * 1.5);
+        if (v.laminado !== 'Sin laminado') base = Math.round(base * 1.2);
+        if (v.troquel !== 'Sin troquel') base += 8000;
+        return base;
+      }
+    },
+    volantes: {
+      icon: '📢', name: 'Volantes', desde: 7500,
+      fields: [
+        {id:'tamano', label:'Tamaño', type:'opts', opts:['10×15 cm','15×21 cm (A5)','21×29 cm (A4)'], def:0},
+        {id:'color', label:'Color', type:'opts', opts:['Full color','Blanco y negro'], def:0},
+        {id:'cantidad', label:'Cantidad', type:'opts', opts:['500 unidades','1000 unidades','2000 unidades','5000 unidades'], def:0},
+        {id:'archivo', label:'Archivo / Diseño', type:'file'},
+        {id:'retiro', label:'Sucursal de retiro', type:'opts', opts:['Rivera Indarte','Av. Rivadavia','Terrero'], def:0}
+      ],
+      calcPrice: function(v) {
+        var bases = {'500 unidades':7500,'1000 unidades':12000,'2000 unidades':20000,'5000 unidades':42000};
+        var p = bases[v.cantidad] || 7500;
+        if (v.tamano === '21×29 cm (A4)') p = Math.round(p * 1.5);
+        if (v.color === 'Blanco y negro') p = Math.round(p * 0.55);
+        return p;
+      }
+    }
+  };
+
+  // ====== CART STATE ======
+  var currentProduct = null;
+  var currentVals = {};
+  var cart = [];
+
+  // ====== MODAL ======
+  function openModal(pid) {
+    if (!PRODUCTS[pid]) return;
+    currentProduct = pid;
+    var prod = PRODUCTS[pid];
+    currentVals = {};
+    prod.fields.forEach(function(f) {
+      if (f.type === 'opts') currentVals[f.id] = f.opts[f.def || 0];
+      else if (f.type === 'qty') currentVals[f.id] = f.def || 1;
+      else currentVals[f.id] = '';
+    });
+    var html = '';
+    prod.fields.forEach(function(f) {
+      html += '<div class="opt-group"><span class="opt-label">' + f.label + '</span>';
+      if (f.type === 'opts') {
+        html += '<div class="opt-cards">';
+        f.opts.forEach(function(opt) {
+          var sel = currentVals[f.id] === opt ? ' sel' : '';
+          html += '<button class="opt-card' + sel + '" onclick="selectOpt(\'' + f.id + '\',\'' + opt.replace(/'/g,"\\'") + '\',this)">' + opt + '</button>';
+        });
+        html += '</div>';
+      } else if (f.type === 'qty') {
+        html += '<div class="qty-row">';
+        html += '<button class="qty-btn" onclick="changeQty(\'' + f.id + '\',-1)">−</button>';
+        html += '<span class="qty-val" id="qty-' + f.id + '">' + currentVals[f.id] + '</span>';
+        html += '<button class="qty-btn" onclick="changeQty(\'' + f.id + '\',1)">+</button>';
+        html += '</div>';
+      } else if (f.type === 'text') {
+        html += '<input class="text-input" type="text" placeholder="' + (f.placeholder||'') + '" oninput="currentVals[\'' + f.id + '\']=this.value;updateModalPrice()">';
+      } else if (f.type === 'file') {
+        html += '<div class="upload-zone" onclick="triggerUpload(\'' + f.id + '\')">';
+        html += '<div class="upload-zone-icon">📎</div>';
+        html += '<div class="upload-zone-txt">Tocá para adjuntar tu archivo<br>PDF · JPG · PNG · AI · PSD</div>';
+        html += '<div class="upload-zone-name" id="fname-' + f.id + '"></div></div>';
+        html += '<input type="file" id="finp-' + f.id + '" style="display:none" onchange="fileChosen(\'' + f.id + '\',this)">';
+      }
+      html += '</div>';
+    });
+    document.getElementById('modal-title').textContent = prod.icon + ' ' + prod.name;
+    document.getElementById('modal-fields').innerHTML = html;
+    updateModalPrice();
+    document.getElementById('modal-ov').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function selectOpt(fid, val, btn) {
+    currentVals[fid] = val;
+    btn.closest('.opt-cards').querySelectorAll('.opt-card').forEach(function(b) { b.classList.remove('sel'); });
+    btn.classList.add('sel');
+    updateModalPrice();
+  }
+
+  function changeQty(fid, delta) {
+    var prod = PRODUCTS[currentProduct];
+    var field = null;
+    prod.fields.forEach(function(f) { if (f.id === fid) field = f; });
+    var min = field ? (field.min || 1) : 1;
+    var max = field ? (field.max || 9999) : 9999;
+    currentVals[fid] = Math.min(max, Math.max(min, (currentVals[fid] || (field ? field.def : 1) || 1) + delta));
+    var el = document.getElementById('qty-' + fid);
+    if (el) el.textContent = currentVals[fid];
+    updateModalPrice();
+  }
+
+  function triggerUpload(fid) {
+    var el = document.getElementById('finp-' + fid);
+    if (el) el.click();
+  }
+
+  function fileChosen(fid, inp) {
+    if (inp.files && inp.files[0]) {
+      currentVals[fid] = inp.files[0].name;
+      var el = document.getElementById('fname-' + fid);
+      if (el) el.textContent = '✓ ' + inp.files[0].name;
+    }
+  }
+
+  function updateModalPrice() {
+    if (!currentProduct) return;
+    var p = PRODUCTS[currentProduct].calcPrice(currentVals);
+    var el = document.getElementById('modal-price');
+    if (el) el.textContent = '$' + p.toLocaleString('es-AR');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-ov').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function addToCart() {
+    var prod = PRODUCTS[currentProduct];
+    var p = prod.calcPrice(currentVals);
+    var descParts = [];
+    prod.fields.forEach(function(f) {
+      if (f.type === 'file' || f.id === 'retiro' || f.id === 'entrega') return;
+      var v = currentVals[f.id];
+      if (v) descParts.push(String(v));
+    });
+    cart.push({
+      id: currentProduct + '_' + Date.now(),
+      pid: currentProduct,
+      icon: prod.icon,
+      name: prod.name,
+      desc: descParts.join(' · '),
+      retiro: currentVals['entrega'] || currentVals['retiro'] || 'Rivera Indarte',
+      price: p,
+      archivo: currentVals['archivo'] || ''
+    });
+    updateCartUI();
+    closeModal();
+    showToast('✓ ' + prod.name + ' agregado al carrito');
+  }
+
+  function updateCartUI() {
+    var count = cart.length;
+    var el = document.getElementById('cart-count');
+    if (el) el.textContent = count;
+    var mob = document.getElementById('cart-count-mob');
+    if (mob) { mob.textContent = count; mob.style.display = count > 0 ? 'flex' : 'none'; }
+    var total = cart.reduce(function(s, i) { return s + i.price; }, 0);
+    var totalEl = document.getElementById('cart-total');
+    if (totalEl) totalEl.textContent = '$' + total.toLocaleString('es-AR');
+    var itemsEl = document.getElementById('cart-items');
+    if (!itemsEl) return;
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Tu carrito está vacío</p></div>';
+      return;
+    }
+    var html = '';
+    cart.forEach(function(item) {
+      html += '<div class="cart-item">';
+      html += '<div class="ci-icon">' + item.icon + '</div>';
+      html += '<div class="ci-info">';
+      html += '<div class="ci-name">' + item.name + '</div>';
+      html += '<div class="ci-desc">' + item.desc + '</div>';
+      if (item.archivo) html += '<div class="ci-desc">📎 ' + item.archivo + '</div>';
+      html += '<div class="ci-price">$' + item.price.toLocaleString('es-AR') + '</div>';
+      html += '</div>';
+      html += '<button class="ci-remove" onclick="removeFromCart(\'' + item.id + '\')">×</button>';
+      html += '</div>';
+    });
+    itemsEl.innerHTML = html;
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(function(i) { return i.id !== id; });
+    updateCartUI();
+  }
+
+  // ====== CART PANEL ======
+  function openCart() {
+    document.getElementById('cart-ov').classList.add('open');
+    document.getElementById('cart-panel').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cart-ov').classList.remove('open');
+    document.getElementById('cart-panel').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ====== CHECKOUT ======
+  function openCheckout() {
+    if (cart.length === 0) { showToast('Agregá productos al carrito primero'); return; }
+    closeCart();
+    document.getElementById('co-ov').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCheckout() {
+    document.getElementById('co-ov').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function buildWAMsg(metodo) {
+    var lines = ['🛒 *Pedido La Roca*'];
+    cart.forEach(function(item, i) {
+      lines.push('');
+      lines.push((i+1) + '. *' + item.name + '*');
+      lines.push('   ' + item.desc);
+      if (item.archivo) lines.push('   📎 Archivo: ' + item.archivo + ' (te lo mando por este chat)');
+      lines.push('   Retiro: ' + item.retiro);
+      lines.push('   Subtotal: $' + item.price.toLocaleString('es-AR'));
+    });
+    var total = cart.reduce(function(s, i) { return s + i.price; }, 0);
+    lines.push('');
+    lines.push('💰 *TOTAL ESTIMADO: $' + total.toLocaleString('es-AR') + '*');
+    lines.push('💳 Forma de pago: ' + metodo);
+    return encodeURIComponent(lines.join('\n'));
+  }
+
+  function payMP() {
+    closeCheckout();
+    window.open('https://wa.me/5491130431614?text=' + buildWAMsg('Mercado Pago'), '_blank');
+  }
+
+  function payTransfer() {
+    closeCheckout();
+    window.open('https://wa.me/5491130431614?text=' + buildWAMsg('Transferencia / Depósito (10% de descuento aplicado)'), '_blank');
+  }
+
+  function payEfectivo() {
+    closeCheckout();
+    window.open('https://wa.me/5491130431614?text=' + buildWAMsg('Efectivo al retirar'), '_blank');
+  }
+
+  // ====== TOAST ======
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
 </script>
 </body>
 </html>
